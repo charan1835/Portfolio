@@ -33,21 +33,24 @@ const sampleProjects = [
     about: "A full-stack e-commerce application built with Next.js, featuring user authentication, payment processing, and admin dashboard.",
     projectLink: "https://github.com/charan1835",
     sourcecode: "https://github.com/charan1835",
-    image: { url: null }
+    // Make sure you have an image at public/project1.png
+    image: { url: "/project1.png" }
   },
   {
     name: "Task Management App",
     about: "A collaborative task management application with real-time updates, built using React, Node.js, and Socket.io.",
     projectLink: "https://github.com/charan1835",
     sourcecode: "https://github.com/charan1835",
-    image: { url: null }
+    // Make sure you have an image at public/project2.png
+    image: { url: "/project2.png" }
   },
   {
     name: "Portfolio Website",
     about: "This responsive portfolio website showcasing my skills and projects, built with Next.js, Tailwind CSS, and Framer Motion.",
     projectLink: "https://github.com/charan1835",
     sourcecode: "https://github.com/charan1835",
-    image: { url: null }
+    // Make sure you have an image at public/project3.png
+    image: { url: "/project3.png" }
   }
 ];
 
