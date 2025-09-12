@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { useInView } from 'framer-motion';
 import { useRef } from 'react';
+import Image from 'next/image';
 import { ExternalLink, Github, Eye, Rocket } from 'lucide-react';
 import { getProjects } from '../_utils/GlobalApi';
 
@@ -96,7 +97,7 @@ export default function ProjectsSection() {
             </h2>
             <div className="bg-red-500/10 border border-red-500/30 rounded-2xl p-8 backdrop-blur-sm">
               <p className="text-red-400 text-lg">{error}</p>
-              <p className="text-slate-400 dark:text-slate-400 light:text-slate-500 mt-2">Please check your environment variables and try again.</p>
+              <p className="text-slate-400 dark:text-slate-400 light:text-slate-500 mt-2">Please check your environment variables and try again. It&apos;s possible the CMS is not reachable.</p>
             </div>
           </motion.div>
         </div>
@@ -155,8 +156,9 @@ export default function ProjectsSection() {
                 {/* Project Image */}
                 <div className="relative overflow-hidden">
                   {project.image?.url ? (
-                    <img 
+                    <Image 
                       src={project.image.url} 
+                      fill
                       alt={project.name}
                       className="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-500"
                     />

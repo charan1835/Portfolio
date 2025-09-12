@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
+import Image from 'next/image';
 import { ExternalLink, Github, Eye, Rocket } from 'lucide-react';
 import { getProjects } from '../_utils/GlobalApi';
 
@@ -145,8 +146,9 @@ export default function ProjectsSectionWithSamples() {
                 {/* Project Image */}
                 <div className="relative overflow-hidden">
                   {project.image?.url ? (
-                    <img 
+                    <Image 
                       src={project.image.url} 
+                      fill
                       alt={project.name}
                       className="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-500"
                     />

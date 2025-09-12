@@ -103,7 +103,7 @@ export default function ContactSection() {
             </h2>
             <div className="w-24 h-1 bg-gradient-to-r from-purple-400 to-pink-400 mx-auto rounded-full mb-8" />
             <p className="text-lg text-slate-300 dark:text-slate-300 light:text-slate-600 max-w-2xl mx-auto">
-              I'm always excited to work on new projects and collaborate with fellow developers. 
+              I&apos;m always excited to work on new projects and collaborate with fellow developers. 
               Whether you have a project idea or just want to chat about tech, feel free to reach out!
             </p>
           </motion.div>
@@ -113,11 +113,11 @@ export default function ContactSection() {
             <motion.div variants={itemVariants} className="space-y-8">
               <div>
                 <h3 className="text-2xl font-semibold text-slate-100 dark:text-slate-100 light:text-slate-900 mb-6">
-                  Let's build something amazing together!
+                  Let&apos;s build something amazing together!
                 </h3>
                 <p className="text-slate-300 dark:text-slate-300 light:text-slate-600 leading-relaxed mb-8">
-                  Ready to bring your ideas to life? I'm here to help you create stunning web applications 
-                  that make a difference. Drop me a message and let's discuss your next project!
+                  Ready to bring your ideas to life? I&apos;m here to help you create stunning web applications 
+                  that make a difference. Drop me a message and let&apos;s discuss your next project!
                 </p>
               </div>
 
