@@ -3,7 +3,6 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { useInView } from 'framer-motion';
-import { useRef } from 'react';
 import Image from 'next/image';
 import { ExternalLink, Github, Eye, Rocket } from 'lucide-react';
 import { getProjects } from '../_utils/GlobalApi';
@@ -27,23 +26,58 @@ const itemVariants = {
   }
 };
 
+// Sample projects for fallback
+const sampleProjects = [
+  {
+    name: "E-Commerce Platform",
+    about: "A full-stack e-commerce application built with Next.js, featuring user authentication, payment processing, and admin dashboard.",
+    projectLink: "https://github.com/charan1835",
+    sourcecode: "https://github.com/charan1835",
+    image: { url: null }
+  },
+  {
+    name: "Task Management App",
+    about: "A collaborative task management application with real-time updates, built using React, Node.js, and Socket.io.",
+    projectLink: "https://github.com/charan1835",
+    sourcecode: "https://github.com/charan1835",
+    image: { url: null }
+  },
+  {
+    name: "Portfolio Website",
+    about: "This responsive portfolio website showcasing my skills and projects, built with Next.js, Tailwind CSS, and Framer Motion.",
+    projectLink: "https://github.com/charan1835",
+    sourcecode: "https://github.com/charan1835",
+    image: { url: null }
+  }
+];
+
 export default function ProjectsSection() {
-  const ref = useRef(null);
+  const ref = useState(null)[0]; // Keep ref for useInView if needed, but it's not used in the merged logic.
   const isInView = useInView(ref, { once: true, margin: "-100px" });
   const [projects, setProjects] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [useSampleData, setUseSampleData] = useState(false);
 
   useEffect(() => {
     const fetchProjects = async () => {
       try {
         setLoading(true);
         const result = await getProjects();
-        setProjects(result.myprojects || []);
+        if (result.myprojects && result.myprojects.length > 0) {
+          setProjects(result.myprojects);
+          setUseSampleData(false);
+        } else {
+          // No projects from CMS, use sample data
+          setProjects(sampleProjects);
+          setUseSampleData(true);
+        }
         setError(null);
       } catch (err) {
-        setError('Failed to load projects');
-        console.error('Error fetching projects:', err);
+        console.log('CMS not configured or failed to fetch, using sample projects');
+        setProjects(sampleProjects);
+        setUseSampleData(true);
+        setError(null); // We are falling back to samples, so not a hard error for the user.
       } finally {
         setLoading(false);
       }
@@ -51,7 +85,6 @@ export default function ProjectsSection() {
 
     fetchProjects();
   }, []);
-
   if (loading) {
     return (
       <section id="projects" className="py-20 px-4 bg-slate-800/30 dark:bg-slate-800/30 light:bg-slate-50/50 backdrop-blur-sm">
@@ -83,51 +116,6 @@ export default function ProjectsSection() {
     );
   }
 
-  if (error) {
-    return (
-      <section id="projects" className="py-20 px-4 bg-slate-800/30 dark:bg-slate-800/30 light:bg-slate-50/50 backdrop-blur-sm">
-        <div className="max-w-7xl mx-auto text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-          >
-            <h2 className="text-4xl md:text-5xl font-bold text-slate-100 dark:text-slate-100 light:text-slate-900 mb-8">
-              My Projects
-            </h2>
-            <div className="bg-red-500/10 border border-red-500/30 rounded-2xl p-8 backdrop-blur-sm">
-              <p className="text-red-400 text-lg">{error}</p>
-              <p className="text-slate-400 dark:text-slate-400 light:text-slate-500 mt-2">Please check your environment variables and try again. It&apos;s possible the CMS is not reachable.</p>
-            </div>
-          </motion.div>
-        </div>
-      </section>
-    );
-  }
-
-  if (projects.length === 0) {
-    return (
-      <section id="projects" className="py-20 px-4 bg-slate-800/30 dark:bg-slate-800/30 light:bg-slate-50/50 backdrop-blur-sm">
-        <div className="max-w-7xl mx-auto text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-          >
-            <h2 className="text-4xl md:text-5xl font-bold text-slate-100 dark:text-slate-100 light:text-slate-900 mb-8">
-              My Projects
-            </h2>
-            <div className="bg-slate-800/50 dark:bg-slate-800/50 light:bg-white/80 border border-slate-700/50 dark:border-slate-700/50 light:border-slate-200/50 rounded-2xl p-8 backdrop-blur-sm">
-              <Rocket className="w-16 h-16 text-purple-400 mx-auto mb-4" />
-              <p className="text-slate-400 dark:text-slate-400 light:text-slate-500 text-lg">No projects available at the moment.</p>
-              <p className="text-slate-500 dark:text-slate-500 light:text-slate-400 mt-2">Projects will appear here once they're added to the CMS.</p>
-            </div>
-          </motion.div>
-        </div>
-      </section>
-    );
-  }
-
   return (
     <section id="projects" className="py-20 px-4 bg-slate-800/30 dark:bg-slate-800/30 light:bg-slate-50/50 backdrop-blur-sm">
       <div className="max-w-7xl mx-auto">
@@ -141,7 +129,12 @@ export default function ProjectsSection() {
             <h2 className="text-4xl md:text-5xl font-bold text-slate-100 dark:text-slate-100 light:text-slate-900 mb-6">
               My Projects
             </h2>
-            <div className="w-24 h-1 bg-gradient-to-r from-purple-400 to-pink-400 mx-auto rounded-full" />
+            <div className="w-24 h-1 bg-gradient-to-r from-purple-400 to-pink-400 mx-auto rounded-full mb-4" />
+            {useSampleData && (
+              <p className="text-slate-400 dark:text-slate-400 light:text-slate-500 text-sm">
+                Sample projects - Connect your Hygraph CMS to show real projects
+              </p>
+            )}
           </motion.div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -251,13 +244,16 @@ export default function ProjectsSection() {
             className="text-center mt-12"
             variants={itemVariants}
           >
-            <motion.button 
-              className="px-8 py-4 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-2xl font-semibold shadow-xl hover:shadow-2xl hover:shadow-purple-500/25 transition-all duration-300"
+            <motion.a
+              href="https://github.com/charan1835"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-block px-8 py-4 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-2xl font-semibold shadow-xl hover:shadow-2xl hover:shadow-purple-500/25 transition-all duration-300"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
-              View All Projects
-            </motion.button>
+              View All Projects on GitHub
+            </motion.a>
           </motion.div>
         </motion.div>
       </div>
