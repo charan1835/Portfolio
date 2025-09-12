@@ -3,6 +3,8 @@
 import { motion } from 'framer-motion';
 import { useState, useRef } from 'react';
 import { ChevronDown, Upload, User } from 'lucide-react';
+import Image from 'next/image';
+
 
 export default function HeroSection() {
   const [profileImage, setProfileImage] = useState(null);
@@ -73,15 +75,18 @@ export default function HeroSection() {
           >
             <div className="relative w-32 h-32 mx-auto mb-6 rounded-full bg-gradient-to-r from-purple-400 to-pink-400 p-1 shadow-2xl">
               <div className="w-full h-full rounded-full bg-slate-800 dark:bg-slate-800 light:bg-white flex items-center justify-center overflow-hidden">
-                {imagePreview ? (
-                  <img
-                    src={imagePreview}
-                    alt="Profile"
-                    className="w-full h-full object-cover rounded-full"
-                  />
-                ) : (
-                  <User className="w-16 h-16 text-slate-400 dark:text-slate-400 light:text-slate-300" />
-                )}
+              {imagePreview ? (
+  <Image
+    src={imagePreview}
+    alt="Profile"
+    width={128} // match your w-32 h-32 container (32 * 4 = 128px)
+    height={128}
+    className="w-full h-full object-cover rounded-full"
+  />
+) : (
+  <User className="w-16 h-16 text-slate-400 dark:text-slate-400 light:text-slate-300" />
+)}
+
               </div>
               <button
                 onClick={() => fileInputRef.current?.click()}
