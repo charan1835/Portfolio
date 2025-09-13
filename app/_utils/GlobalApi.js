@@ -29,9 +29,13 @@ const GET_PROJECTS = gql`
 // Function to fetch projects from Hygraph
 export const getProjects = async () => {
   try {
-    const result = await request(MASTER_URL, GET_PROJECTS, {
-      "Authorization": `Bearer ${HYGRAPH_TOKEN}`,
-    });
+    // The headers should be passed as the third parameter to request
+    const result = await request(
+      MASTER_URL, 
+      GET_PROJECTS, 
+      null, // No variables needed
+      { Authorization: `Bearer ${HYGRAPH_TOKEN}` } // Correct way to pass headers
+    );
     return result;
   } catch (error) {
     console.error("Error fetching projects:", error);
