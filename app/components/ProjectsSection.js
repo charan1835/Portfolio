@@ -1,12 +1,198 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useId, useLayoutEffect } from 'react';
 import { motion } from 'framer-motion';
 import { useInView } from 'framer-motion';
 import Image from 'next/image';
 import { ExternalLink, Github, Eye, Rocket, Plus, X, Save, Lock, LogIn, Trash2 } from 'lucide-react';
 import { getProjects } from '../_utils/GlobalApi';
 import toast, { Toaster } from 'react-hot-toast';
+
+// ElectricBorder Component
+function hexToRgba(hex, alpha = 1) {
+  if (!hex) return `rgba(0,0,0,${alpha})`;
+  let h = hex.replace('#', '');
+  if (h.length === 3) {
+    h = h
+      .split('')
+      .map(c => c + c)
+      .join('');
+  }
+  const int = parseInt(h, 16);
+  const r = (int >> 16) & 255;
+  const g = (int >> 8) & 255;
+  const b = int & 255;
+  return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+}
+
+const ElectricBorder = ({ children, color = '#5227FF', speed = 1, chaos = 1, thickness = 2, className, style }) => {
+  const rawId = useId().replace(/[:]/g, '');
+  const filterId = `turbulent-displace-${rawId}`;
+  const svgRef = useRef(null);
+  const rootRef = useRef(null);
+  const strokeRef = useRef(null);
+
+  const updateAnim = () => {
+    const svg = svgRef.current;
+    const host = rootRef.current;
+    if (!svg || !host) return;
+
+    if (strokeRef.current) {
+      strokeRef.current.style.filter = `url(#${filterId})`;
+    }
+
+    const width = Math.max(1, Math.round(host.clientWidth || host.getBoundingClientRect().width || 0));
+    const height = Math.max(1, Math.round(host.clientHeight || host.getBoundingClientRect().height || 0));
+
+    const dyAnims = Array.from(svg.querySelectorAll('feOffset > animate[attributeName="dy"]'));
+    if (dyAnims.length >= 2) {
+      dyAnims[0].setAttribute('values', `${height}; 0`);
+      dyAnims[1].setAttribute('values', `0; -${height}`);
+    }
+
+    const dxAnims = Array.from(svg.querySelectorAll('feOffset > animate[attributeName="dx"]'));
+    if (dxAnims.length >= 2) {
+      dxAnims[0].setAttribute('values', `${width}; 0`);
+      dxAnims[1].setAttribute('values', `0; -${width}`);
+    }
+
+    const baseDur = 6;
+    const dur = Math.max(0.001, baseDur / (speed || 1));
+    [...dyAnims, ...dxAnims].forEach(a => a.setAttribute('dur', `${dur}s`));
+
+    const disp = svg.querySelector('feDisplacementMap');
+    if (disp) disp.setAttribute('scale', String(30 * (chaos || 1)));
+
+    const filterEl = svg.querySelector(`#${CSS.escape(filterId)}`);
+    if (filterEl) {
+      filterEl.setAttribute('x', '-200%');
+      filterEl.setAttribute('y', '-200%');
+      filterEl.setAttribute('width', '500%');
+      filterEl.setAttribute('height', '500%');
+    }
+
+    requestAnimationFrame(() => {
+      [...dyAnims, ...dxAnims].forEach(a => {
+        if (typeof a.beginElement === 'function') {
+          try {
+            a.beginElement();
+          } catch {
+            console.warn('ElectricBorder: beginElement failed');
+          }
+        }
+      });
+    });
+  };
+
+  useEffect(() => {
+    updateAnim();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [speed, chaos]);
+
+  useLayoutEffect(() => {
+    if (!rootRef.current) return;
+    const ro = new ResizeObserver(() => updateAnim());
+    ro.observe(rootRef.current);
+    updateAnim();
+    return () => ro.disconnect();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const inheritRadius = {
+    borderRadius: style?.borderRadius ?? 'inherit'
+  };
+
+  const strokeStyle = {
+    ...inheritRadius,
+    borderWidth: thickness,
+    borderStyle: 'solid',
+    borderColor: color
+  };
+
+  const glow1Style = {
+    ...inheritRadius,
+    borderWidth: thickness,
+    borderStyle: 'solid',
+    borderColor: hexToRgba(color, 0.6),
+    filter: `blur(${0.5 + thickness * 0.25}px)`,
+    opacity: 0.5
+  };
+
+  const glow2Style = {
+    ...inheritRadius,
+    borderWidth: thickness,
+    borderStyle: 'solid',
+    borderColor: color,
+    filter: `blur(${2 + thickness * 0.5}px)`,
+    opacity: 0.5
+  };
+
+  const bgGlowStyle = {
+    ...inheritRadius,
+    transform: 'scale(1.08)',
+    filter: 'blur(32px)',
+    opacity: 0.3,
+    zIndex: -1,
+    background: `linear-gradient(-30deg, ${hexToRgba(color, 0.8)}, transparent, ${color})`
+  };
+
+  return (
+    <div ref={rootRef} className={'relative isolate ' + (className ?? '')} style={style}>
+      <svg
+        ref={svgRef}
+        className="fixed -left-[10000px] -top-[10000px] w-[10px] h-[10px] opacity-[0.001] pointer-events-none"
+        aria-hidden
+        focusable="false"
+      >
+        <defs>
+          <filter id={filterId} colorInterpolationFilters="sRGB" x="-20%" y="-20%" width="140%" height="140%">
+            <feTurbulence type="turbulence" baseFrequency="0.02" numOctaves="10" result="noise1" seed="1" />
+            <feOffset in="noise1" dx="0" dy="0" result="offsetNoise1">
+              <animate attributeName="dy" values="700; 0" dur="6s" repeatCount="indefinite" calcMode="linear" />
+            </feOffset>
+
+            <feTurbulence type="turbulence" baseFrequency="0.02" numOctaves="10" result="noise2" seed="1" />
+            <feOffset in="noise2" dx="0" dy="0" result="offsetNoise2">
+              <animate attributeName="dy" values="0; -700" dur="6s" repeatCount="indefinite" calcMode="linear" />
+            </feOffset>
+
+            <feTurbulence type="turbulence" baseFrequency="0.02" numOctaves="10" result="noise1" seed="2" />
+            <feOffset in="noise1" dx="0" dy="0" result="offsetNoise3">
+              <animate attributeName="dx" values="490; 0" dur="6s" repeatCount="indefinite" calcMode="linear" />
+            </feOffset>
+
+            <feTurbulence type="turbulence" baseFrequency="0.02" numOctaves="10" result="noise2" seed="2" />
+            <feOffset in="noise2" dx="0" dy="0" result="offsetNoise4">
+              <animate attributeName="dx" values="0; -490" dur="6s" repeatCount="indefinite" calcMode="linear" />
+            </feOffset>
+
+            <feComposite in="offsetNoise1" in2="offsetNoise2" result="part1" />
+            <feComposite in="offsetNoise3" in2="offsetNoise4" result="part2" />
+            <feBlend in="part1" in2="part2" mode="color-dodge" result="combinedNoise" />
+            <feDisplacementMap
+              in="SourceGraphic"
+              in2="combinedNoise"
+              scale="30"
+              xChannelSelector="R"
+              yChannelSelector="B"
+            />
+          </filter>
+        </defs>
+      </svg>
+
+      <div className="absolute inset-0 pointer-events-none" style={inheritRadius}>
+        <div ref={strokeRef} className="absolute inset-0 box-border" style={strokeStyle} />
+        <div className="absolute inset-0 box-border" style={glow1Style} />
+        <div className="absolute inset-0 box-border" style={glow2Style} />
+        <div className="absolute inset-0" style={bgGlowStyle} />
+      </div>
+
+      <div className="relative" style={inheritRadius}>
+        {children}
+      </div>
+    </div>
+  );
+};
 
 // Helper function to handle different image URL formats
 const getImageUrl = (url) => {
@@ -417,110 +603,119 @@ export default function ProjectsSection() {
               <motion.div
                 key={index}
                 variants={itemVariants}
-                className="group relative bg-slate-800/50 dark:bg-slate-800/50 light:bg-white/80 rounded-2xl border border-slate-700/50 dark:border-slate-700/50 light:border-slate-200/50 overflow-hidden backdrop-blur-sm hover:border-purple-500/50 dark:hover:border-purple-500/50 light:hover:border-purple-400/50 transition-all duration-300 shadow-xl hover:shadow-2xl hover:shadow-purple-500/20"
                 whileHover={{ y: -5 }}
                 transition={{ duration: 0.2 }}
               >
-                {/* Project Image */}
-                <div className="relative overflow-hidden h-48">
-                  {project.image?.url ? (
-                    <div className="relative h-full w-full">
-                      <Image 
-                        src={getImageUrl(project.image.url)} 
-                        alt={project.name}
-                        fill={true}
-                        sizes="100vw"
-                        className="object-cover group-hover:scale-110 transition-transform duration-500"
-                      />
+                <ElectricBorder
+                  color="#7df9ff"
+                  speed={1}
+                  chaos={0.5}
+                  thickness={2}
+                  style={{ borderRadius: 16 }}
+                >
+                  <div className="group relative bg-slate-800/50 dark:bg-slate-800/50 light:bg-white/80 rounded-2xl overflow-hidden backdrop-blur-sm transition-all duration-300 shadow-xl hover:shadow-2xl hover:shadow-cyan-500/20">
+                    {/* Project Image */}
+                    <div className="relative overflow-hidden h-48">
+                      {project.image?.url ? (
+                        <div className="relative h-full w-full">
+                          <Image 
+                            src={getImageUrl(project.image.url)} 
+                            alt={project.name}
+                            fill={true}
+                            sizes="100vw"
+                            className="object-cover group-hover:scale-110 transition-transform duration-500"
+                          />
+                        </div>
+                      ) : (
+                        <div className="w-full h-48 bg-gradient-to-br from-purple-500/20 to-pink-500/20 flex items-center justify-center">
+                          <Rocket className="w-16 h-16 text-purple-400" />
+                        </div>
+                      )}
+                      
+                      {/* Overlay - Reduced opacity and changed gradient */}
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                      
+                      {/* Quick Actions - Moved to bottom right for better visibility */}
+                      <div className="absolute bottom-4 right-4 flex space-x-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10">
+                        {isAuthenticated && (
+                          <motion.button
+                            onClick={(e) => {
+                              e.preventDefault();
+                              e.stopPropagation();
+                              setProjectToDelete(index);
+                              setShowDeleteConfirm(true);
+                            }}
+                            className="p-2 bg-red-500/80 rounded-full backdrop-blur-sm hover:bg-red-600/80 transition-colors duration-300"
+                            whileHover={{ scale: 1.1 }}
+                            whileTap={{ scale: 0.9 }}
+                          >
+                            <Trash2 className="w-4 h-4 text-white" />
+                          </motion.button>
+                        )}
+                        {project.projectLink && (
+                          <motion.a
+                            href={project.projectLink}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="p-2 bg-slate-800/80 rounded-full backdrop-blur-sm hover:bg-purple-500/80 transition-colors duration-300"
+                            whileHover={{ scale: 1.1 }}
+                            whileTap={{ scale: 0.9 }}
+                          >
+                            <Eye className="w-4 h-4 text-white" />
+                          </motion.a>
+                        )}
+                        {project.sourcecode && (
+                          <motion.a
+                            href={project.sourcecode}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="p-2 bg-slate-800/80 rounded-full backdrop-blur-sm hover:bg-slate-600/80 transition-colors duration-300"
+                            whileHover={{ scale: 1.1 }}
+                            whileTap={{ scale: 0.9 }}
+                          >
+                            <Github className="w-4 h-4 text-white" />
+                          </motion.a>
+                        )}
+                      </div>
                     </div>
-                  ) : (
-                    <div className="w-full h-48 bg-gradient-to-br from-purple-500/20 to-pink-500/20 flex items-center justify-center">
-                      <Rocket className="w-16 h-16 text-purple-400" />
+                    
+                    {/* Project Content */}
+                    <div className="p-6">
+                      <h3 className="text-xl font-bold text-slate-100 dark:text-slate-100 light:text-slate-800 mb-2">
+                        {project.name}
+                      </h3>
+                      <p className="text-slate-400 dark:text-slate-400 light:text-slate-600 text-sm mb-4">
+                        {project.about}
+                      </p>
+                      
+                      {/* Project Links */}
+                      <div className="flex space-x-3">
+                        {project.projectLink && (
+                          <a
+                            href={project.projectLink}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="flex items-center gap-1 text-xs font-medium px-3 py-1 rounded-full bg-gradient-to-r from-purple-500/10 to-pink-500/10 text-purple-400 hover:from-purple-500/20 hover:to-pink-500/20 transition-all duration-300"
+                          >
+                            <ExternalLink className="w-3 h-3" />
+                            Live Demo
+                          </a>
+                        )}
+                        {project.sourcecode && (
+                          <a
+                            href={project.sourcecode}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="flex items-center gap-1 text-xs font-medium px-3 py-1 rounded-full bg-gradient-to-r from-slate-500/10 to-slate-600/10 text-slate-400 hover:from-slate-500/20 hover:to-slate-600/20 transition-all duration-300"
+                          >
+                            <Github className="w-3 h-3" />
+                            Source Code
+                          </a>
+                        )}
+                      </div>
                     </div>
-                  )}
-                  
-                  {/* Overlay - Reduced opacity and changed gradient */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                  
-                  {/* Quick Actions - Moved to bottom right for better visibility */}
-                  <div className="absolute bottom-4 right-4 flex space-x-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10">
-                    {isAuthenticated && (
-                      <motion.button
-                        onClick={(e) => {
-                          e.preventDefault();
-                          e.stopPropagation();
-                          setProjectToDelete(index);
-                          setShowDeleteConfirm(true);
-                        }}
-                        className="p-2 bg-red-500/80 rounded-full backdrop-blur-sm hover:bg-red-600/80 transition-colors duration-300"
-                        whileHover={{ scale: 1.1 }}
-                        whileTap={{ scale: 0.9 }}
-                      >
-                        <Trash2 className="w-4 h-4 text-white" />
-                      </motion.button>
-                    )}
-                    {project.projectLink && (
-                      <motion.a
-                        href={project.projectLink}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="p-2 bg-slate-800/80 rounded-full backdrop-blur-sm hover:bg-purple-500/80 transition-colors duration-300"
-                        whileHover={{ scale: 1.1 }}
-                        whileTap={{ scale: 0.9 }}
-                      >
-                        <Eye className="w-4 h-4 text-white" />
-                      </motion.a>
-                    )}
-                    {project.sourcecode && (
-                      <motion.a
-                        href={project.sourcecode}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="p-2 bg-slate-800/80 rounded-full backdrop-blur-sm hover:bg-slate-600/80 transition-colors duration-300"
-                        whileHover={{ scale: 1.1 }}
-                        whileTap={{ scale: 0.9 }}
-                      >
-                        <Github className="w-4 h-4 text-white" />
-                      </motion.a>
-                    )}
                   </div>
-                </div>
-                
-                {/* Project Content */}
-                <div className="p-6">
-                  <h3 className="text-xl font-bold text-slate-100 dark:text-slate-100 light:text-slate-800 mb-2">
-                    {project.name}
-                  </h3>
-                  <p className="text-slate-400 dark:text-slate-400 light:text-slate-600 text-sm mb-4">
-                    {project.about}
-                  </p>
-                  
-                  {/* Project Links */}
-                  <div className="flex space-x-3">
-                    {project.projectLink && (
-                      <a
-                        href={project.projectLink}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="flex items-center gap-1 text-xs font-medium px-3 py-1 rounded-full bg-gradient-to-r from-purple-500/10 to-pink-500/10 text-purple-400 hover:from-purple-500/20 hover:to-pink-500/20 transition-all duration-300"
-                      >
-                        <ExternalLink className="w-3 h-3" />
-                        Live Demo
-                      </a>
-                    )}
-                    {project.sourcecode && (
-                      <a
-                        href={project.sourcecode}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="flex items-center gap-1 text-xs font-medium px-3 py-1 rounded-full bg-gradient-to-r from-slate-500/10 to-slate-600/10 text-slate-400 hover:from-slate-500/20 hover:to-slate-600/20 transition-all duration-300"
-                      >
-                        <Github className="w-3 h-3" />
-                        Source Code
-                      </a>
-                    )}
-                  </div>
-                </div>
+                </ElectricBorder>
               </motion.div>
             ))}
           </div>
