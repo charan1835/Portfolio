@@ -1,8 +1,9 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { useInView } from 'framer-motion';
 import { useRef, useState } from 'react';
+import { useInView } from 'framer-motion';
+import { createContact } from '../_utils/GlobalApi';
 import { Mail, Linkedin, Github, Instagram, Send, CheckCircle } from 'lucide-react';
 
 const containerVariants = {
@@ -76,16 +77,20 @@ export default function ContactSection() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
-    
-    // Simulate form submission
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    
-    setIsSubmitting(false);
-    setIsSubmitted(true);
-    setFormData({ name: '', email: '', message: '' });
-    
-    // Reset success state after 3 seconds
-    setTimeout(() => setIsSubmitted(false), 3000);
+
+    try {
+      await createContact(formData);
+      setIsSubmitted(true);
+      setFormData({ name: '', email: '', message: '' });
+
+      // Reset success state after 3 seconds
+      setTimeout(() => setIsSubmitted(false), 3000);
+    } catch (error) {
+      console.error("Failed to send message:", error);
+      // You could set an error state here to show a message to the user
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
