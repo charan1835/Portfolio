@@ -108,7 +108,7 @@ export default function Navigation() {
             opacity: isOpen ? 1 : 0,
           }}
           transition={{ duration: 0.3 }}
-          className="md:hidden overflow-hidden"
+          className={`md:hidden ${isOpen ? 'overflow-visible' : 'overflow-hidden'}`}
         >
           <div className="px-2 pt-2 pb-3 space-y-1 bg-slate-800/90 dark:bg-slate-800/90 light:bg-white/90 backdrop-blur-xl rounded-2xl mt-2 border border-slate-700/50 dark:border-slate-700/50 light:border-slate-200/50">
             {navItems.map((item, index) => (
