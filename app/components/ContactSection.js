@@ -66,7 +66,6 @@ export default function ContactSection() {
     message: ''
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isSubmitted, setIsSubmitted] = useState(false);
 
   const handleInputChange = (e) => {
     setFormData({

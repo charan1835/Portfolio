@@ -23,6 +23,32 @@ const itemVariants = {
   }
 };
 
+const Skill = ({ icon, name, color }) => (
+  <motion.div
+    className="group relative"
+    whileHover={{ y: -5 }}
+    transition={{ duration: 0.2 }}
+  >
+    <div className="relative p-4 rounded-2xl bg-slate-800/50 dark:bg-slate-800/50 light:bg-white/80 border border-slate-700/50 dark:border-slate-700/50 light:border-slate-200/50 backdrop-blur-sm hover:border-purple-500/50 dark:hover:border-purple-500/50 light:hover:border-purple-400/50 transition-all duration-300 overflow-hidden">
+      {/* Hover Glow Effect */}
+      <div className={`absolute inset-0 bg-gradient-to-r ${color} opacity-0 group-hover:opacity-10 transition-opacity duration-300`} />
+      
+      {/* Content */}
+      <div className="relative z-10 text-center">
+        <div className="text-3xl mb-2 group-hover:scale-110 transition-transform duration-300">
+          {icon}
+        </div>
+        <h4 className="text-white dark:text-white light:text-slate-900 font-semibold text-sm group-hover:text-purple-300 dark:group-hover:text-purple-300 light:group-hover:text-purple-600 transition-colors duration-300">
+          {name}
+        </h4>
+      </div>
+
+      {/* Shine Effect */}
+      <div className="absolute inset-0 -top-2 -left-2 w-8 h-8 bg-white/20 rounded-full opacity-0 group-hover:opacity-100 group-hover:animate-ping transition-opacity duration-300" />
+    </div>
+  </motion.div>
+);
+
 const skillCategories = [
   {
     title: "Web Development",
@@ -93,30 +119,7 @@ export default function SkillsSection() {
                 </h3>
                 <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-7 gap-4">
                   {category.skills.map((skill, index) => (
-                    <motion.div
-                      key={index}
-                      className="group relative"
-                      whileHover={{ y: -5 }}
-                      transition={{ duration: 0.2 }}
-                    >
-                      <div className="relative p-4 rounded-2xl bg-slate-800/50 dark:bg-slate-800/50 light:bg-white/80 border border-slate-700/50 dark:border-slate-700/50 light:border-slate-200/50 backdrop-blur-sm hover:border-purple-500/50 dark:hover:border-purple-500/50 light:hover:border-purple-400/50 transition-all duration-300 overflow-hidden">
-                        {/* Hover Glow Effect */}
-                        <div className={`absolute inset-0 bg-gradient-to-r ${skill.color} opacity-0 group-hover:opacity-10 transition-opacity duration-300`} />
-                        
-                        {/* Content */}
-                        <div className="relative z-10 text-center">
-                          <div className="text-3xl mb-2 group-hover:scale-110 transition-transform duration-300">
-                            {skill.icon}
-                          </div>
-                          <h4 className="text-white dark:text-white light:text-slate-900 font-semibold text-sm group-hover:text-purple-300 dark:group-hover:text-purple-300 light:group-hover:text-purple-600 transition-colors duration-300">
-                            {skill.name}
-                          </h4>
-                        </div>
-
-                        {/* Shine Effect */}
-                        <div className="absolute inset-0 -top-2 -left-2 w-8 h-8 bg-white/20 rounded-full opacity-0 group-hover:opacity-100 group-hover:animate-ping transition-opacity duration-300" />
-                      </div>
-                    </motion.div>
+                    <Skill key={index} {...skill} />
                   ))}
                 </div>
               </motion.div>

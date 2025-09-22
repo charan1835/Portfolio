@@ -39,12 +39,6 @@ const getImageUrl = (url) => {
   return `https://media.graphassets.com/${url.split('/').pop()}`;
 };
 
-// Helper function to format skill names from API IDs
-const formatSkillName = (apiId) => {
-  if (typeof apiId !== 'string') return '';
-  return apiId.replace(/_/g, ' ');
-};
-
 const containerVariants = {
   hidden: { opacity: 0 },
   visible: {

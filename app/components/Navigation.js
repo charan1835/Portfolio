@@ -26,12 +26,13 @@ export default function Navigation() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const scrollToSection = (href) => {
+  const scrollToSection = (e, href) => {
+    e.preventDefault();
     const element = document.querySelector(href);
     if (element) {
       element.scrollIntoView({ behavior: 'smooth' });
-      setIsOpen(false);
     }
+    setIsOpen(false);
   };
 
   return (
@@ -52,21 +53,23 @@ export default function Navigation() {
             className="flex-shrink-0"
             whileHover={{ scale: 1.05 }}
           >
-            <button
-              onClick={() => scrollToSection('#home')}
+            <a
+              href="#home"
+              onClick={(e) => scrollToSection(e, '#home')}
               className="text-2xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent hover:from-purple-300 hover:to-pink-300 transition-all duration-300"
             >
               Charan Sai
-            </button>
+            </a>
           </motion.div>
 
           {/* Desktop Navigation */}
           <div className="hidden md:block">
             <div className="ml-10 flex items-baseline space-x-8">
               {navItems.map((item, index) => (
-                <motion.button
+                <motion.a
                   key={item.name}
-                  onClick={() => scrollToSection(item.href)}
+                  href={item.href}
+                  onClick={(e) => scrollToSection(e, item.href)}
                   className="text-slate-300 dark:text-slate-300 light:text-slate-600 hover:text-purple-400 dark:hover:text-purple-400 light:hover:text-purple-500 px-3 py-2 rounded-xl text-sm font-medium transition-all duration-300 hover:bg-slate-800/50 dark:hover:bg-slate-800/50 light:hover:bg-slate-100/50"
                   whileHover={{ y: -2 }}
                   initial={{ opacity: 0, y: -20 }}
@@ -74,7 +77,7 @@ export default function Navigation() {
                   transition={{ delay: index * 0.1 }}
                 >
                   {item.name}
-                </motion.button>
+                </motion.a>
               ))}
             </div>
           </div>
@@ -112,16 +115,17 @@ export default function Navigation() {
         >
           <div className="px-2 pt-2 pb-3 space-y-1 bg-slate-800/90 dark:bg-slate-800/90 light:bg-white/90 backdrop-blur-xl rounded-2xl mt-2 border border-slate-700/50 dark:border-slate-700/50 light:border-slate-200/50">
             {navItems.map((item, index) => (
-              <motion.button
+              <motion.a
                 key={item.name}
-                onClick={() => scrollToSection(item.href)}
+                href={item.href}
+                onClick={(e) => scrollToSection(e, item.href)}
                 className="block w-full text-left px-3 py-2 rounded-xl text-slate-300 dark:text-slate-300 light:text-slate-600 hover:text-purple-400 dark:hover:text-purple-400 light:hover:text-purple-500 hover:bg-slate-700/50 dark:hover:bg-slate-700/50 light:hover:bg-slate-100/50 transition-all duration-300"
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: index * 0.1 }}
               >
                 {item.name}
-              </motion.button>
+              </motion.a>
             ))}
           </div>
         </motion.div>
