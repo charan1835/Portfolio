@@ -24,22 +24,37 @@ const itemVariants = {
   }
 };
 
+const stats = [
+  { number: "12+", label: "Months Coding", color: "from-purple-500/20 to-pink-500/20" },
+  { number: "10+", label: "Projects Built", color: "from-blue-500/20 to-cyan-500/20" },
+  { number: "4+", label: "Tech Stacks", color: "from-green-500/20 to-emerald-500/20" },
+  { number: "100%", label: "Self-Taught", color: "from-yellow-500/20 to-orange-500/20" }
+];
+
+const traits = [
+  { icon: Target, text: "Problem Solver", color: "text-purple-400" },
+  { icon: Zap, text: "Self-Taught", color: "text-blue-400" },
+  { icon: Lightbulb, text: "ML Enthusiast", color: "text-yellow-400" }
+];
+
+function Trait({ icon: Icon, text, color }) {
+  return (
+    <motion.div
+      className="flex items-center space-x-2 bg-slate-700/50 dark:bg-slate-700/50 light:bg-white/80 px-4 py-2 rounded-2xl border border-slate-600/50 dark:border-slate-600/50 light:border-slate-200/50 backdrop-blur-sm"
+      whileHover={{ scale: 1.05 }}
+      transition={{ duration: 0.2 }}
+    >
+      <Icon className={`w-4 h-4 ${color}`} />
+      <span className={`text-sm font-medium ${color}`}>
+        {text}
+      </span>
+    </motion.div>
+  );
+}
+
 export default function AboutSection() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
-
-  const stats = [
-    { number: "12+", label: "Months Coding", color: "from-purple-500/20 to-pink-500/20" },
-    { number: "10+", label: "Projects Built", color: "from-blue-500/20 to-cyan-500/20" },
-    { number: "4+", label: "Tech Stacks", color: "from-green-500/20 to-emerald-500/20" },
-    { number: "100%", label: "Self-Taught", color: "from-yellow-500/20 to-orange-500/20" }
-  ];
-
-  const traits = [
-    { icon: Target, text: "Problem Solver", color: "text-purple-400" },
-    { icon: Zap, text: "Self-Taught", color: "text-blue-400" },
-    { icon: Lightbulb, text: "ML Enthusiast", color: "text-yellow-400" }
-  ];
 
   return (
     <section id="about" className="py-20 px-4 bg-slate-800 relative z-10">
@@ -72,17 +87,7 @@ export default function AboutSection() {
               {/* Traits */}
               <div className="flex flex-wrap gap-4">
                 {traits.map((trait, index) => (
-                  <motion.div
-                    key={index}
-                    className="flex items-center space-x-2 bg-slate-700/50 dark:bg-slate-700/50 light:bg-white/80 px-4 py-2 rounded-2xl border border-slate-600/50 dark:border-slate-600/50 light:border-slate-200/50 backdrop-blur-sm"
-                    whileHover={{ scale: 1.05 }}
-                    transition={{ duration: 0.2 }}
-                  >
-                    <trait.icon className={`w-4 h-4 ${trait.color}`} />
-                    <span className={`text-sm font-medium ${trait.color}`}>
-                      {trait.text}
-                    </span>
-                  </motion.div>
+                  <Trait key={index} icon={trait.icon} text={trait.text} color={trait.color} />
                 ))}
               </div>
             </motion.div>
