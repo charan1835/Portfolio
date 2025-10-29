@@ -25,7 +25,7 @@ const itemVariants = {
 };
 
 const experience = {
-  title: "Full Stack Development Intern, Freelance",
+  title: "Full Stack Development Freelance",
   duration: "Aug 2025 – Present",
   location: "Guntakal",
   achievements: [
