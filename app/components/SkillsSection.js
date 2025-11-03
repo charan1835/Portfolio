@@ -87,6 +87,9 @@ const skillCategories = [
       { name: 'Git/GitHub', icon: '📚', color: 'from-slate-600 to-slate-700' },
       { name: 'Postman', icon: '📮', color: 'from-orange-500 to-orange-600' },
       { name: 'Figma', icon: '🎨', color: 'from-pink-500 to-pink-600' },
+      { name: 'Streamlite', icon: '📊', color: 'from-blue-600 to-blue-700' },
+      { name: 'Vercel', icon: '🚀', color: 'from-black to-gray-800' },
+      
     ]
   }
 ];
