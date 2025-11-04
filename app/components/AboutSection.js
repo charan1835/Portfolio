@@ -33,7 +33,6 @@ const stats = [
 
 const traits = [
   { icon: Target, text: "Problem Solver", color: "text-purple-400" },
-  { icon: Zap, text: "Self-Taught", color: "text-blue-400" },
   { icon: Lightbulb, text: "ML Enthusiast", color: "text-yellow-400" }
 ];
 
@@ -77,7 +76,7 @@ export default function AboutSection() {
             <motion.div variants={itemVariants} className="space-y-8">
               <div className="space-y-6">
                 <p className="text-lg text-slate-300 dark:text-slate-300 light:text-slate-600 leading-relaxed">
-                  Hey, I&apos;m Charan — a self-taught full-stack developer and ML student. I went from zero coding background to building production-ready apps in under 9months. I love solving problems with Next.js, Tailwind, Clerk, and Hygraph while also exploring how AI can make apps smarter.
+                  Hey, I&apos;m Charan — a full-stack developer and ML student. I went from zero coding background to building production-ready apps in under 9months. I love solving problems with Next.js, Tailwind, Clerk, and Hygraph while also exploring how AI can make apps smarter.
                 </p>
                 <p className="text-lg text-slate-300 dark:text-slate-300 light:text-slate-600 leading-relaxed">
                   My goal? To ship meaningful projects that merge clean design with powerful tech. When I&apos;m not coding, you can find me exploring new technologies, contributing to open-source projects, or sharing knowledge with the developer community.
