@@ -5,10 +5,12 @@ import SkillsSection from './components/SkillsSection';
 import ExperienceSection from './components/ExperienceSection';
 import ProjectsSection from './components/ProjectsSection';
 import ContactSection from './components/ContactSection';
+import SplashCursor from './components/SplashCursor';
 
 export default function Home() {
   return (
     <main className="min-h-screen bg-slate-900 dark:bg-slate-900 light:bg-slate-50 transition-colors duration-300">
+      <SplashCursor />
       <Navigation />
       <HeroSection />
       <AboutSection />

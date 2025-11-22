@@ -105,7 +105,7 @@ export default function ContactSection() {
             </h2>
             <div className="w-24 h-1 bg-gradient-to-r from-purple-400 to-pink-400 mx-auto rounded-full mb-8" />
             <p className="text-lg text-slate-300 dark:text-slate-300 light:text-slate-600 max-w-2xl mx-auto">
-              I&apos;m always excited to work on new projects and collaborate with fellow developers. 
+              I&apos;m always excited to work on new projects and collaborate with fellow developers.
               Whether you have a project idea or just want to chat about tech, feel free to reach out!
             </p>
           </motion.div>
@@ -118,7 +118,7 @@ export default function ContactSection() {
                   Let&apos;s build something amazing together!
                 </h3>
                 <p className="text-slate-300 dark:text-slate-300 light:text-slate-600 leading-relaxed mb-8">
-                  Ready to bring your ideas to life? I&apos;m here to help you create stunning web applications 
+                  Ready to bring your ideas to life? I&apos;m here to help you create stunning web applications
                   that make a difference. Drop me a message and let&apos;s discuss your next project!
                 </p>
               </div>
@@ -149,7 +149,7 @@ export default function ContactSection() {
                 <h4 className="text-xl font-semibold text-slate-100 dark:text-slate-100 light:text-slate-900 mb-6">
                   Send me a message
                 </h4>
-                
+
                 <form onSubmit={handleSubmit} className="space-y-6">
                   <div>
                     <label htmlFor="name" className="block text-sm font-medium text-slate-300 dark:text-slate-300 light:text-slate-600 mb-2">
@@ -202,11 +202,10 @@ export default function ContactSection() {
                   <motion.button
                     type="submit"
                     disabled={isSubmitting}
-                    className={`w-full flex items-center justify-center space-x-2 py-4 px-6 rounded-xl font-semibold text-white transition-all duration-300 disabled:opacity-70 ${
-                      isSubmitting
-                        ? 'bg-gray-500'
-                        : 'bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600'
-                    } shadow-lg hover:shadow-xl hover:shadow-purple-500/25`}
+                    className={`w-full flex items-center justify-center space-x-2 py-4 px-6 rounded-xl font-semibold text-white transition-all duration-300 disabled:opacity-70 ${isSubmitting
+                      ? 'bg-gray-500'
+                      : 'bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600'
+                      } shadow-lg hover:shadow-xl hover:shadow-purple-500/25`}
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
                   >
