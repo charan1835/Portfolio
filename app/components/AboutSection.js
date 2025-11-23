@@ -95,9 +95,6 @@ export default function AboutSection() {
                     I went from <span className="text-purple-400 font-medium">zero coding background</span> to building production-ready apps in under 9 months.
                   </p>
                   <p>
-                    I love solving problems with <span className="text-blue-400 font-medium">Next.js</span>, <span className="text-cyan-400 font-medium">Tailwind</span>, and <span className="text-emerald-400 font-medium">modern tech stacks</span> while exploring how AI can make apps smarter.
-                  </p>
-                  <p>
                     My goal? To ship meaningful projects that merge <span className="text-slate-100 font-medium">clean design</span> with <span className="text-slate-100 font-medium">powerful tech</span>.
                   </p>
                 </div>
