@@ -34,7 +34,7 @@ export default function ContactSection() {
           {/* Giant Call to Action */}
           <div>
             <h2 className="text-7xl md:text-9xl font-bold tracking-tighter text-white mb-8 leading-[0.8]">
-              LET&apos;S <br />
+              LET&rsquo;S <br />
               <span className="text-outline">TALK.</span>
             </h2>
             <div className="text-2xl text-gray-400 max-w-md">
