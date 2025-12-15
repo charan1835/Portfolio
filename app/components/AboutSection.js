@@ -23,11 +23,11 @@ export default function AboutSection() {
 
             <div className="space-y-6 text-lg text-gray-400 leading-relaxed">
               <p>
-                I'm <strong className="text-white">Charan Sai</strong>, a computer science student and developer.
+                I&apos;m <strong className="text-white">Charan Sai</strong>, a computer science student and developer.
                 My passion lies in understanding how complex systems work and rebuilding them to be better, faster, and more intuitive.
               </p>
               <p>
-                While I'm constantly learning new technologies, my core philosophy stays the same:
+                While I&apos;m constantly learning new technologies, my core philosophy stays the same:
                 <span className="text-white"> simplicity is the ultimate sophistication</span>. I strive to write code that human beings can understand and computers can execute efficiently.
               </p>
             </div>

@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { ArrowUpRight, Github, ExternalLink } from 'lucide-react';
+import Image from 'next/image';
 import { getProjects } from '../_utils/GlobalApi';
 
 const sampleProjects = [
@@ -58,10 +59,12 @@ function ProjectCard({ project, idx }) {
       {/* Background Image Container */}
       <div className="absolute inset-0 h-full w-full">
         {project.image?.url && (
-          <img
+          <Image
             src={project.image.url}
             alt={project.name}
-            className="object-cover w-full h-full transition-transform duration-700 group-hover:scale-110 grayscale-[30%] group-hover:grayscale-0"
+            fill
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            className="object-cover transition-transform duration-700 group-hover:scale-110 grayscale-[30%] group-hover:grayscale-0"
           />
         )}
         {/* Cinematic Gradient Overlay (Top to Bottom) */}
