@@ -17,7 +17,7 @@ export default function HeroSection() {
   };
 
   return (
-    <section id="home" className="min-h-screen flex items-center justify-center relative overflow-hidden bg-slate-900">
+    <section id="home" className="min-h-screen flex items-center justify-center relative overflow-hidden bg-black">
       <ProfileCard
         avatarUrl="/pic.png"
         name="Charan Sai"
