@@ -15,7 +15,7 @@ export default function ExperienceSection() {
   return (
     <section id="experience" className="py-32 px-6 bg-background">
       <div className="max-w-7xl mx-auto">
-        <h2 className="text-4xl md:text-6xl font-bold text-white mb-20 tracking-tighter">
+        <h2 className="text-4xl md:text-6xl font-bold text-foreground mb-20 tracking-tighter">
           CAREER <span className="text-outline">TIMELINE</span>
         </h2>
 
@@ -37,10 +37,10 @@ export default function ExperienceSection() {
               </div>
 
               {/* Content */}
-              <div className="md:col-span-8 pt-4 md:pt-8 border-t border-white/10 group-hover:border-primary/50 transition-colors">
-                <h3 className="text-3xl font-bold text-white mb-2 group-hover:text-primary transition-colors">{exp.role}</h3>
-                <div className="text-xl text-gray-400 mb-6">{exp.company}</div>
-                <p className="text-lg text-gray-400 leading-relaxed max-w-2xl">
+              <div className="md:col-span-8 pt-4 md:pt-8 border-t border-border group-hover:border-primary/50 transition-colors">
+                <h3 className="text-3xl font-bold text-foreground mb-2 group-hover:text-primary transition-colors">{exp.role}</h3>
+                <div className="text-xl text-muted-foreground mb-6">{exp.company}</div>
+                <p className="text-lg text-muted-foreground leading-relaxed max-w-2xl">
                   {exp.desc}
                 </p>
               </div>

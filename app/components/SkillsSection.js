@@ -35,7 +35,7 @@ function SkillCard({ skill }) {
 
   return (
     <div
-      className="group relative border border-white/10 bg-white/5 px-4 py-3 rounded-xl overflow-hidden"
+      className="group relative border border-border bg-card/50 px-4 py-3 rounded-xl overflow-hidden"
       onMouseMove={handleMouseMove}
     >
       {/* Spotlight Gradient */}
@@ -45,7 +45,7 @@ function SkillCard({ skill }) {
           background: useMotionTemplate`
             radial-gradient(
               300px circle at ${mouseX}px ${mouseY}px,
-              rgba(37, 99, 235, 0.15),
+              var(--primary),
               transparent 80%
             )
           `,
@@ -54,7 +54,7 @@ function SkillCard({ skill }) {
       <div className="relative flex items-center gap-3">
         {/* Simple dot for now, or icon if we mapped them */}
         <div className="w-2 h-2 rounded-full bg-primary/50 group-hover:bg-primary transition-colors" />
-        <span className="text-gray-300 font-medium group-hover:text-white transition-colors">{skill}</span>
+        <span className="text-muted-foreground font-medium group-hover:text-foreground transition-colors">{skill}</span>
       </div>
     </div>
   );
@@ -68,8 +68,8 @@ export default function SkillsSection() {
 
       <div className="max-w-6xl mx-auto relative z-10">
         <div className="text-center mb-20">
-          <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">Technical <span className="text-primary">Mastery</span></h2>
-          <p className="text-gray-400 max-w-2xl mx-auto">
+          <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-6">Technical <span className="text-primary">Mastery</span></h2>
+          <p className="text-muted-foreground max-w-2xl mx-auto">
             A comprehensive toolset developed through academic rigor and hands-on project experience.
           </p>
         </div>
@@ -84,7 +84,7 @@ export default function SkillsSection() {
               transition={{ delay: idx * 0.1 }}
               className="space-y-4"
             >
-              <h3 className="text-xl font-semibold text-white pl-1">{category.title}</h3>
+              <h3 className="text-xl font-semibold text-foreground pl-1">{category.title}</h3>
               <div className="grid gap-3">
                 {category.skills.map((skill, sIdx) => (
                   <SkillCard key={sIdx} skill={skill} />

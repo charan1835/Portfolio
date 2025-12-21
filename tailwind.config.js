@@ -10,18 +10,18 @@ module.exports = {
 		extend: {
 			colors: {
 				// Strict 3-Color Palette
-				background: '#050505', // Deep Void Black
-				foreground: '#F5F5F7', // Off-White
+				background: 'var(--background)',
+				foreground: 'var(--foreground)',
 				primary: '#2563EB',    // Royal Blue Accent
 
 				// Semantic aliases mapped to the same palette
-				card: '#0a0a0a',       // Slightly lighter black for cards
-				'card-foreground': '#F5F5F7',
-				border: '#262626',     // Subtle border
-				input: '#262626',
+				card: 'var(--card)',
+				'card-foreground': 'var(--card-foreground)',
+				border: 'var(--border)',
+				input: 'var(--input)',
 
-				muted: '#525252',
-				'muted-foreground': '#a3a3a3',
+				muted: 'var(--muted)',
+				'muted-foreground': 'var(--muted-foreground)',
 			},
 			borderRadius: {
 				lg: 'var(--radius)',

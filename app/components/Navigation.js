@@ -3,6 +3,7 @@
 import { motion } from 'framer-motion';
 import { useState, useEffect } from 'react';
 import { Menu, X } from 'lucide-react';
+import SimpleThemeToggle from './SimpleThemeToggle';
 
 const navItems = [
   { name: 'Home', href: '#home' },
@@ -40,8 +41,8 @@ export default function Navigation() {
       animate={{ y: 0 }}
       transition={{ duration: 0.5 }}
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled
-          ? 'bg-black/80 backdrop-blur-md border-b border-white/5 py-4'
-          : 'bg-transparent py-6'
+        ? 'bg-black/80 backdrop-blur-md border-b border-white/5 py-4'
+        : 'bg-transparent py-6'
         }`}
     >
       <div className="max-w-7xl mx-auto px-6">
@@ -57,7 +58,7 @@ export default function Navigation() {
           </motion.a>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-1">
+          <div className="hidden md:flex items-center space-x-4">
             {navItems.map((item, index) => (
               <a
                 key={item.name}
@@ -69,10 +70,14 @@ export default function Navigation() {
                 <span className="absolute inset-x-0 bottom-0 h-0.5 bg-primary transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left" />
               </a>
             ))}
+            <div className="pl-4 border-l border-white/10">
+              <SimpleThemeToggle />
+            </div>
           </div>
 
           {/* Mobile Menu Button */}
-          <div className="md:hidden">
+          <div className="md:hidden flex items-center gap-4">
+            <SimpleThemeToggle />
             <button
               onClick={() => setIsOpen(!isOpen)}
               className="p-2 text-gray-300 hover:text-white transition-colors"

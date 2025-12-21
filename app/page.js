@@ -4,6 +4,7 @@ import AboutSection from './components/AboutSection';
 import SkillsSection from './components/SkillsSection';
 import ExperienceSection from './components/ExperienceSection';
 import ProjectsSection from './components/ProjectsSection';
+import AchievementsSection from './components/AchievementsSection';
 import ContactSection from './components/ContactSection';
 //import SplashCursor from './components/SplashCursor';
 
@@ -11,7 +12,7 @@ import ContactSection from './components/ContactSection';
 
 export default function Home() {
   return (
-    <main className="min-h-screen bg-slate-900 dark:bg-slate-900 light:bg-slate-50 transition-colors duration-300">
+    <main className="min-h-screen bg-background transition-colors duration-300">
       {/* GrainOverlay removed for clarity */}
       <Navigation />
       <HeroSection />
@@ -19,6 +20,7 @@ export default function Home() {
       <SkillsSection />
       <ExperienceSection />
       <ProjectsSection />
+      <AchievementsSection />
       <ContactSection />
     </main>
   );

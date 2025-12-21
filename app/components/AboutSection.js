@@ -16,19 +16,19 @@ export default function AboutSection() {
             viewport={{ once: true }}
             className="space-y-8"
           >
-            <h2 className="text-4xl md:text-5xl font-bold text-white leading-tight">
+            <h2 className="text-4xl md:text-5xl font-bold text-foreground leading-tight">
               Driven by curiosity,<br />
               <span className="text-primary">Powered by code.</span>
             </h2>
 
-            <div className="space-y-6 text-lg text-gray-400 leading-relaxed">
+            <div className="space-y-6 text-lg text-muted-foreground leading-relaxed">
               <p>
-                I&rsquo;m <strong className="text-white">Charan Sai</strong>, a computer science student and developer.
+                I&rsquo;m <strong className="text-foreground">Charan Sai</strong>, a computer science student and developer.
                 My passion lies in understanding how complex systems work and rebuilding them to be better, faster, and more intuitive.
               </p>
               <p>
                 While I&rsquo;m constantly learning new technologies, my core philosophy stays the same:
-                <span className="text-white"> simplicity is the ultimate sophistication</span>. I strive to write code that human beings can understand and computers can execute efficiently.
+                <span className="text-foreground"> simplicity is the ultimate sophistication</span>. I strive to write code that human beings can understand and computers can execute efficiently.
               </p>
             </div>
 

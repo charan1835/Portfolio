@@ -143,11 +143,11 @@ export default function ProjectsSection() {
 
       <div className="max-w-7xl mx-auto relative z-10">
         <div className="mb-16">
-          <h2 className="text-5xl md:text-7xl font-bold text-white mb-6 tracking-tighter">
+          <h2 className="text-5xl md:text-7xl font-bold text-foreground mb-6 tracking-tighter">
             FEATURED <span className="text-outline">WORK</span>
           </h2>
           <div className="h-1 w-20 bg-primary mb-6" />
-          <p className="text-xl text-gray-400 max-w-2xl">
+          <p className="text-xl text-muted-foreground max-w-2xl">
             A collection of projects exploring the boundaries of design and technology.
           </p>
         </div>
@@ -155,7 +155,7 @@ export default function ProjectsSection() {
         {/* Cinematic Grid */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6 auto-rows-[450px]">
           {loading ? (
-            <div className="text-white col-span-4">Loading...</div>
+            <div className="text-foreground col-span-4">Loading...</div>
           ) : (
             projects.map((project, idx) => (
               <ProjectCard key={idx} project={project} idx={idx} />

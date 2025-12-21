@@ -36,7 +36,7 @@ export default function SimpleThemeToggle() {
   return (
     <button
       onClick={toggleTheme}
-      className="p-3 rounded-2xl bg-slate-800/50 dark:bg-slate-800/50 light:bg-white/80 border border-slate-700/50 dark:border-slate-700/50 light:border-slate-200/50 backdrop-blur-sm hover:bg-slate-700/50 dark:hover:bg-slate-700/50 light:hover:bg-white/90 transition-all duration-300"
+      className="p-3 rounded-2xl bg-card border border-border text-foreground hover:bg-card/80 transition-all duration-300"
     >
       {theme === 'dark' ? (
         <Sun className="w-5 h-5 text-yellow-400" />
