@@ -1,8 +1,8 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
-import { ArrowUpRight, Github, ExternalLink } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { ArrowUpRight, Github, ExternalLink, Sparkles, FolderGit2, Code2 } from 'lucide-react';
 import Image from 'next/image';
 import { getProjects } from '../_utils/GlobalApi';
 
@@ -13,15 +13,17 @@ const sampleProjects = [
     projectLink: "https://github.com/charan1835",
     sourcecode: "https://github.com/charan1835",
     tags: ["Next.js", "Stripe", "PostgreSQL"],
-    image: { url: "https://images.unsplash.com/photo-1557821552-17105176677c?w=800&q=80" } // Modern UI abstract
+    category: "Web App",
+    image: { url: "https://images.unsplash.com/photo-1557821552-17105176677c?w=800&q=80" }
   },
   {
     name: "Task Sync",
-    about: "Real-time collaboration tool for remote teams. Syncs tasks, chats, and files instantly using WebSockets. Handles conflict resolution using operational transformation to ensure data consistency across clients.",
+    about: "Real-time collaboration tool for remote teams. Syncs tasks, chats, and files instantly using WebSockets. Handles conflict resolution using operational transformation to ensure data consistency.",
     projectLink: "https://github.com/charan1835",
     sourcecode: "https://github.com/charan1835",
     tags: ["React", "Socket.io", "Node.js"],
-    image: { url: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80" } // Dashboard abstract
+    category: "Web App",
+    image: { url: "https://images.unsplash.com/photo-1540350394557-8d14678e7f91?w=800&q=80" }
   },
   {
     name: "Portfolio V1",
@@ -29,7 +31,8 @@ const sampleProjects = [
     projectLink: "https://github.com/charan1835",
     sourcecode: "https://github.com/charan1835",
     tags: ["Three.js", "GSAP"],
-    image: { url: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=800&q=80" } // Abstract 3D
+    category: "Creative",
+    image: { url: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=800&q=80" }
   },
   {
     name: "AI Writer",
@@ -37,78 +40,104 @@ const sampleProjects = [
     projectLink: "https://github.com/charan1835",
     sourcecode: "https://github.com/charan1835",
     tags: ["OpenAI", "Python"],
-    image: { url: "https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=800&q=80" } // AI/Network abstract
+    category: "AI/ML",
+    image: { url: "https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=800&q=80" }
   }
 ];
 
 function ProjectCard({ project, idx }) {
-  // isLarge logic: 1st and 4th items span 2 cols for variety
-  const isLarge = idx === 0 || idx === 3;
+  const [isHovered, setIsHovered] = useState(false);
 
   return (
     <motion.div
-      key={idx}
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ delay: idx * 0.1 }}
-      className={`group relative bg-card border border-white/10 rounded-3xl overflow-hidden shadow-xl hover:shadow-primary/20 hover:border-primary/50 transition-all duration-500
-      ${isLarge ? 'md:col-span-2' : 'md:col-span-1'}
-      `}
+      viewport={{ once: true, margin: "-50px" }}
+      transition={{ delay: idx * 0.1, duration: 0.5 }}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+      className="group relative flex flex-col bg-card border border-border rounded-3xl overflow-hidden hover:border-primary/50 transition-all duration-500 hover:shadow-2xl hover:shadow-primary/5"
     >
-      {/* Background Image Container */}
-      <div className="absolute inset-0 h-full w-full">
-        {project.image?.url && (
+      {/* Image Section */}
+      <div className="relative h-56 w-full overflow-hidden">
+        {project.image?.url ? (
           <Image
             src={project.image.url}
             alt={project.name}
             fill
-            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-            className="object-cover transition-transform duration-700 group-hover:scale-110 grayscale-[30%] group-hover:grayscale-0"
+            className="object-cover transition-transform duration-700 group-hover:scale-105"
           />
+        ) : (
+          <div className="absolute inset-0 bg-gradient-to-br from-gray-800 to-gray-900 flex items-center justify-center">
+            <Code2 className="w-12 h-12 text-gray-700" />
+          </div>
         )}
-        {/* Cinematic Gradient Overlay (Top to Bottom) */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent opacity-90 group-hover:opacity-80 transition-opacity duration-500" />
-      </div>
 
-      {/* Content Layer - Floating Glass Card */}
-      <div className="relative h-full flex flex-col justify-end p-6 md:p-8">
+        {/* Overlay Gradient */}
+        <div className="absolute inset-0 bg-gradient-to-t from-card via-card/20 to-transparent opacity-80" />
 
-        {/* Top Actions (Hidden by default, reveal on hover) */}
-        <div className="absolute top-6 right-6 flex gap-2 opacity-0 group-hover:opacity-100 transform -translate-y-2 group-hover:translate-y-0 transition-all duration-300">
-          {project.projectLink && (
-            <a href={project.projectLink} target="_blank" rel="noreferrer" className="p-3 bg-white/10 backdrop-blur-md rounded-full text-white hover:bg-primary hover:text-white transition-colors border border-white/10">
-              <ExternalLink className="w-5 h-5" />
-            </a>
-          )}
-          {project.sourcecode && (
-            <a href={project.sourcecode} target="_blank" rel="noreferrer" className="p-3 bg-white/10 backdrop-blur-md rounded-full text-white hover:bg-white/20 transition-colors border border-white/10">
-              <Github className="w-5 h-5" />
-            </a>
-          )}
+        {/* Links overlay - visible on hover/tap */}
+        <div className={`absolute inset-0 flex items-center justify-center gap-4 transition-opacity duration-300 ${isHovered ? 'opacity-100' : 'opacity-0'}`}>
+          <div className="flex gap-3">
+            {project.projectLink && (
+              <a
+                href={project.projectLink}
+                target="_blank"
+                rel="noreferrer"
+                className="p-3 bg-background/80 backdrop-blur-md rounded-full text-foreground hover:text-primary hover:scale-110 transition-all border border-white/10 shadow-lg"
+                aria-label="View Project"
+              >
+                <ExternalLink className="w-5 h-5" />
+              </a>
+            )}
+            {project.sourcecode && (
+              <a
+                href={project.sourcecode}
+                target="_blank"
+                rel="noreferrer"
+                className="p-3 bg-background/80 backdrop-blur-md rounded-full text-foreground hover:text-primary hover:scale-110 transition-all border border-white/10 shadow-lg"
+                aria-label="View Source Code"
+              >
+                <Github className="w-5 h-5" />
+              </a>
+            )}
+          </div>
         </div>
 
-        {/* Text Content */}
-        <div className="translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
-          <h3 className="text-3xl font-bold text-white mb-3 tracking-tight group-hover:text-primary transition-colors">
-            {project.name}
-          </h3>
+        {/* Category Badge */}
+        <div className="absolute top-4 left-4">
+          {project.category && (
+            <span className="inline-flex items-center gap-1.5 text-xs font-bold text-white bg-black/50 backdrop-blur-md border border-white/10 px-3 py-1.5 rounded-full shadow-lg">
+              <Sparkles className="w-3 h-3 text-primary" />
+              {project.category}
+            </span>
+          )}
+        </div>
+      </div>
 
-          <div className="max-h-0 group-hover:max-h-40 overflow-hidden transition-all duration-500 ease-in-out">
-            <p className="text-gray-300 text-sm leading-relaxed mb-4 opacity-0 group-hover:opacity-100 transition-opacity duration-700 delay-100">
-              {project.about}
-            </p>
-          </div>
+      {/* Content Section */}
+      <div className="flex flex-col flex-grow p-6 md:p-8 pt-2">
+        <h3 className="text-2xl font-bold text-foreground mb-3 group-hover:text-primary transition-colors flex items-center gap-2">
+          {project.name}
+          <ArrowUpRight className="w-5 h-5 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300 text-primary" />
+        </h3>
 
-          <div className="flex flex-wrap gap-2 mt-2">
+        <p className="text-muted-foreground text-sm leading-relaxed mb-6 line-clamp-3">
+          {project.about}
+        </p>
+
+        <div className="mt-auto pt-4 border-t border-border/50">
+          <div className="flex flex-wrap gap-2">
             {(project.skill || project.tags || []).slice(0, 4).map((tag, tIdx) => (
-              <span key={tIdx} className="text-xs font-semibold text-white/90 bg-white/10 backdrop-blur-md border border-white/10 px-3 py-1 rounded-full">
-                {tag}
+              <span
+                key={tIdx}
+                className="text-xs font-medium text-primary bg-primary/10 px-2.5 py-1 rounded-md"
+              >
+                #{tag}
               </span>
             ))}
           </div>
         </div>
-
       </div>
     </motion.div>
   );
@@ -117,6 +146,7 @@ function ProjectCard({ project, idx }) {
 export default function ProjectsSection() {
   const [projects, setProjects] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [activeFilter, setActiveFilter] = useState('All');
 
   useEffect(() => {
     const fetchProjects = async () => {
@@ -136,32 +166,83 @@ export default function ProjectsSection() {
     fetchProjects();
   }, []);
 
+  const categories = ['All', ...new Set(projects.map(p => p.category || 'Other'))];
+
+  const filteredProjects = activeFilter === 'All'
+    ? projects
+    : projects.filter(p => (p.category || 'Other') === activeFilter);
+
   return (
-    <section id="projects" className="py-24 px-6 bg-background relative overflow-hidden">
-      {/* Background Decoration */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1000px] h-[600px] bg-primary/5 rounded-full blur-[120px] pointer-events-none" />
+    <section id="projects" className="py-24 px-4 md:px-6 bg-background relative">
+      <div className="max-w-7xl mx-auto">
 
-      <div className="max-w-7xl mx-auto relative z-10">
-        <div className="mb-16">
-          <h2 className="text-5xl md:text-7xl font-bold text-foreground mb-6 tracking-tighter">
-            FEATURED <span className="text-outline">WORK</span>
-          </h2>
-          <div className="h-1 w-20 bg-primary mb-6" />
-          <p className="text-xl text-muted-foreground max-w-2xl">
-            A collection of projects exploring the boundaries of design and technology.
-          </p>
+        {/* Header */}
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-16">
+          <div className="max-w-2xl">
+            <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-6 tracking-tight">
+              My <span className="text-primary">projects</span>
+            </h2>
+            <p className="text-lg text-muted-foreground">
+              A collection of projects that define my journey as a developer.
+              From conceptual experiments to production-ready applications.
+            </p>
+          </div>
+
+          <a
+            href="https://github.com/charan1835"
+            target="_blank"
+            rel="noreferrer"
+            className="hidden md:inline-flex items-center gap-2 text-sm font-semibold text-foreground hover:text-primary transition-colors group"
+          >
+            <FolderGit2 className="w-5 h-5 text-primary" />
+            View GitHub Profile
+            <ArrowUpRight className="w-4 h-4 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
+          </a>
         </div>
 
-        {/* Cinematic Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-6 auto-rows-[450px]">
-          {loading ? (
-            <div className="text-foreground col-span-4">Loading...</div>
-          ) : (
-            projects.map((project, idx) => (
-              <ProjectCard key={idx} project={project} idx={idx} />
-            ))
-          )}
+        {/* Filters */}
+        <div className="flex overflow-x-auto no-scrollbar gap-2 mb-12 pb-2">
+          {categories.map((category) => (
+            <button
+              key={category}
+              onClick={() => setActiveFilter(category)}
+              className={`whitespace-nowrap px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ${activeFilter === category
+                ? 'bg-primary text-white shadow-lg shadow-primary/25'
+                : 'bg-card border border-border text-muted-foreground hover:text-foreground hover:border-primary/30'
+                }`}
+            >
+              {category}
+            </button>
+          ))}
         </div>
+
+        {/* Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <AnimatePresence mode='popLayout'>
+            {loading ? (
+              [...Array(3)].map((_, i) => (
+                <div key={i} className="h-[400px] bg-card/50 rounded-3xl animate-pulse border border-white/5" />
+              ))
+            ) : (
+              filteredProjects.map((project, idx) => (
+                <ProjectCard key={project.id || idx} project={project} idx={idx} />
+              ))
+            )}
+          </AnimatePresence>
+        </div>
+
+        <div className="mt-12 md:hidden text-center">
+          <a
+            href="https://github.com/charan1835"
+            target="_blank"
+            rel="noreferrer"
+            className="inline-flex items-center gap-2 text-sm font-semibold text-foreground hover:text-primary transition-colors"
+          >
+            <FolderGit2 className="w-5 h-5 text-primary" />
+            View GitHub Profile
+          </a>
+        </div>
+
       </div>
     </section>
   );

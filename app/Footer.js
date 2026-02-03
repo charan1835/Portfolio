@@ -26,6 +26,13 @@ export default function Footer() {
             </motion.a>
           ))}
         </div>
+
+        <div>
+          <a href="https://github.com/charan1835" target="_blank" rel="noopener noreferrer" className="text-slate-400 hover:text-purple-400 transition-colors" whileHover={{ y: -2 }} whileTap={{ scale: 0.95 }}>
+            <Github className="w-5 h-5" />
+            <p>GitHub</p>
+          </a>
+        </div>
       </div>
     </footer>
   );

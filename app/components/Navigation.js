@@ -2,7 +2,6 @@
 
 import { motion } from 'framer-motion';
 import { useState, useEffect } from 'react';
-import { Menu, X } from 'lucide-react';
 import SimpleThemeToggle from './SimpleThemeToggle';
 
 const navItems = [
@@ -15,14 +14,27 @@ const navItems = [
 ];
 
 export default function Navigation() {
-  const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [activeSection, setActiveSection] = useState('home');
 
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 20);
+
+      // Determine active section
+      const sections = navItems.map(item => item.href.substring(1));
+      const scrollPosition = window.scrollY + 150; // Offset for header height
+
+      for (const section of sections) {
+        const element = document.getElementById(section);
+        if (element && element.offsetTop <= scrollPosition && (element.offsetTop + element.offsetHeight) > scrollPosition) {
+          setActiveSection(section);
+        }
+      }
     };
+
     window.addEventListener('scroll', handleScroll);
+    handleScroll(); // Check initial state
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
@@ -30,9 +42,17 @@ export default function Navigation() {
     e.preventDefault();
     const element = document.querySelector(href);
     if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
+      const offset = 80; // Header offset
+      const bodyRect = document.body.getBoundingClientRect().top;
+      const elementRect = element.getBoundingClientRect().top;
+      const elementPosition = elementRect - bodyRect;
+      const offsetPosition = elementPosition - offset;
+
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: 'smooth'
+      });
     }
-    setIsOpen(false);
   };
 
   return (
@@ -40,18 +60,15 @@ export default function Navigation() {
       initial={{ y: -100 }}
       animate={{ y: 0 }}
       transition={{ duration: 0.5 }}
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled
-        ? 'bg-black/80 backdrop-blur-md border-b border-white/5 py-4'
-        : 'bg-transparent py-6'
-        }`}
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 bg-background/80 backdrop-blur-md border-b border-white/5`}
     >
-      <div className="max-w-7xl mx-auto px-6">
+      <div className={`max-w-7xl mx-auto px-6 transition-all duration-300 ${scrolled ? 'py-4' : 'py-6'}`}>
         <div className="flex items-center justify-between">
           {/* Logo */}
           <motion.a
             href="#home"
             onClick={(e) => scrollToSection(e, '#home')}
-            className="text-2xl font-bold tracking-tight text-white"
+            className="text-2xl font-bold tracking-tight text-white z-50"
             whileHover={{ scale: 1.05 }}
           >
             Charan<span className="text-primary">.</span>
@@ -59,15 +76,17 @@ export default function Navigation() {
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-4">
-            {navItems.map((item, index) => (
+            {navItems.map((item) => (
               <a
                 key={item.name}
                 href={item.href}
                 onClick={(e) => scrollToSection(e, item.href)}
-                className="relative px-4 py-2 text-sm font-medium text-gray-300 hover:text-white transition-colors group"
+                className={`relative px-4 py-2 text-sm font-medium transition-colors group ${activeSection === item.href.substring(1) ? 'text-primary' : 'text-gray-300 hover:text-white'
+                  }`}
               >
                 {item.name}
-                <span className="absolute inset-x-0 bottom-0 h-0.5 bg-primary transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left" />
+                <span className={`absolute inset-x-0 bottom-0 h-0.5 bg-primary transform transition-transform origin-left ${activeSection === item.href.substring(1) ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'
+                  }`} />
               </a>
             ))}
             <div className="pl-4 border-l border-white/10">
@@ -75,37 +94,30 @@ export default function Navigation() {
             </div>
           </div>
 
-          {/* Mobile Menu Button */}
+          {/* Mobile Theme Toggle */}
           <div className="md:hidden flex items-center gap-4">
             <SimpleThemeToggle />
-            <button
-              onClick={() => setIsOpen(!isOpen)}
-              className="p-2 text-gray-300 hover:text-white transition-colors"
-            >
-              {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-            </button>
           </div>
         </div>
+      </div>
 
-        {/* Mobile Navigation */}
-        <motion.div
-          initial={false}
-          animate={{ height: isOpen ? 'auto' : 0, opacity: isOpen ? 1 : 0 }}
-          className={`md:hidden overflow-hidden ${isOpen ? 'mt-4 pb-4' : ''}`}
-        >
-          <div className="flex flex-col space-y-2">
-            {navItems.map((item) => (
-              <a
-                key={item.name}
-                href={item.href}
-                onClick={(e) => scrollToSection(e, item.href)}
-                className="block px-4 py-3 text-base font-medium text-gray-300 hover:text-white hover:bg-white/5 rounded-lg transition-colors"
-              >
-                {item.name}
-              </a>
-            ))}
-          </div>
-        </motion.div>
+      {/* Mobile Horizontal Scroll "Tabs" - The "Section Scroll Thing" */}
+      <div className="md:hidden border-t border-white/5 bg-black/20 backdrop-blur-xl">
+        <div className="overflow-x-auto no-scrollbar py-3 px-4 flex gap-4 snap-x">
+          {navItems.map((item) => (
+            <a
+              key={item.name}
+              href={item.href}
+              onClick={(e) => scrollToSection(e, item.href)}
+              className={`whitespace-nowrap text-sm font-medium px-3 py-1.5 rounded-full transition-all snap-center ${activeSection === item.href.substring(1)
+                ? 'bg-primary text-white shadow-lg shadow-primary/20'
+                : 'text-gray-400 hover:text-white bg-white/5 border border-white/5'
+                }`}
+            >
+              {item.name}
+            </a>
+          ))}
+        </div>
       </div>
     </motion.nav>
   );
