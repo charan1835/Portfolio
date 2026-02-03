@@ -71,7 +71,7 @@ export default function Navigation() {
             className="text-2xl font-bold tracking-tight text-white z-50"
             whileHover={{ scale: 1.05 }}
           >
-            Charan<span className="text-primary">.</span>
+            CHARAN<span className="text-primary">SAI</span>
           </motion.a>
 
           {/* Desktop Navigation */}
