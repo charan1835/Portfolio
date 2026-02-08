@@ -84,7 +84,7 @@ function ProjectCard({ project, idx }) {
                 href={project.projectLink}
                 target="_blank"
                 rel="noreferrer"
-                className="p-3 bg-background/80 backdrop-blur-md rounded-full text-foreground hover:text-primary hover:scale-110 transition-all border border-white/10 shadow-lg"
+                className="p-3 bg-background/80 backdrop-blur-md rounded-full text-foreground hover:text-primary hover:scale-110 transition-all border border-border shadow-lg"
                 aria-label="View Project"
               >
                 <ExternalLink className="w-5 h-5" />
@@ -95,7 +95,7 @@ function ProjectCard({ project, idx }) {
                 href={project.sourcecode}
                 target="_blank"
                 rel="noreferrer"
-                className="p-3 bg-background/80 backdrop-blur-md rounded-full text-foreground hover:text-primary hover:scale-110 transition-all border border-white/10 shadow-lg"
+                className="p-3 bg-background/80 backdrop-blur-md rounded-full text-foreground hover:text-primary hover:scale-110 transition-all border border-border shadow-lg"
                 aria-label="View Source Code"
               >
                 <Github className="w-5 h-5" />
@@ -221,7 +221,7 @@ export default function ProjectsSection() {
           <AnimatePresence mode='popLayout'>
             {loading ? (
               [...Array(3)].map((_, i) => (
-                <div key={i} className="h-[400px] bg-card/50 rounded-3xl animate-pulse border border-white/5" />
+                <div key={i} className="h-[400px] bg-card/50 rounded-3xl animate-pulse border border-border" />
               ))
             ) : (
               filteredProjects.map((project, idx) => (

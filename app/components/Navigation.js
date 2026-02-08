@@ -60,7 +60,7 @@ export default function Navigation() {
       initial={{ y: -100 }}
       animate={{ y: 0 }}
       transition={{ duration: 0.5 }}
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 bg-background/80 backdrop-blur-md border-b border-white/5`}
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 bg-background/80 backdrop-blur-md border-b border-border`}
     >
       <div className={`max-w-7xl mx-auto px-6 transition-all duration-300 ${scrolled ? 'py-4' : 'py-6'}`}>
         <div className="flex items-center justify-between">
@@ -68,7 +68,7 @@ export default function Navigation() {
           <motion.a
             href="#home"
             onClick={(e) => scrollToSection(e, '#home')}
-            className="text-2xl font-bold tracking-tight text-white z-50"
+            className="text-2xl font-bold tracking-tight text-foreground z-50"
             whileHover={{ scale: 1.05 }}
           >
             CHARAN<span className="text-primary">SAI</span>
@@ -81,7 +81,7 @@ export default function Navigation() {
                 key={item.name}
                 href={item.href}
                 onClick={(e) => scrollToSection(e, item.href)}
-                className={`relative px-4 py-2 text-sm font-medium transition-colors group ${activeSection === item.href.substring(1) ? 'text-primary' : 'text-gray-300 hover:text-white'
+                className={`relative px-4 py-2 text-sm font-medium transition-colors group ${activeSection === item.href.substring(1) ? 'text-primary' : 'text-muted-foreground hover:text-foreground'
                   }`}
               >
                 {item.name}
@@ -89,7 +89,7 @@ export default function Navigation() {
                   }`} />
               </a>
             ))}
-            <div className="pl-4 border-l border-white/10">
+            <div className="pl-4 border-l border-border">
               <SimpleThemeToggle />
             </div>
           </div>
@@ -102,7 +102,7 @@ export default function Navigation() {
       </div>
 
       {/* Mobile Horizontal Scroll "Tabs" - The "Section Scroll Thing" */}
-      <div className="md:hidden border-t border-white/5 bg-black/20 backdrop-blur-xl">
+      <div className="md:hidden border-t border-border bg-background/95 backdrop-blur-xl">
         <div className="overflow-x-auto no-scrollbar py-3 px-4 flex gap-4 snap-x">
           {navItems.map((item) => (
             <a
@@ -111,7 +111,7 @@ export default function Navigation() {
               onClick={(e) => scrollToSection(e, item.href)}
               className={`whitespace-nowrap text-sm font-medium px-3 py-1.5 rounded-full transition-all snap-center ${activeSection === item.href.substring(1)
                 ? 'bg-primary text-white shadow-lg shadow-primary/20'
-                : 'text-gray-400 hover:text-white bg-white/5 border border-white/5'
+                : 'text-muted-foreground hover:text-foreground bg-muted/50 border border-border'
                 }`}
             >
               {item.name}
