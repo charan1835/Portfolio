@@ -6,9 +6,8 @@ import ExperienceSection from './components/ExperienceSection';
 import ProjectsSection from './components/ProjectsSection';
 import AchievementsSection from './components/AchievementsSection';
 import ContactSection from './components/ContactSection';
+import Footer from './Footer';
 //import SplashCursor from './components/SplashCursor';
-
-// import GrainOverlay from './components/GrainOverlay';
 
 export default function Home() {
   return (
@@ -22,6 +21,7 @@ export default function Home() {
       <ProjectsSection />
       <AchievementsSection />
       <ContactSection />
+      <Footer />
     </main>
   );
 }

@@ -20,6 +20,10 @@ const skillCategories = [
   {
     title: "Tools",
     skills: ["Git", "VS Code", "Vercel", "Figma", "Boltic", "Postman"]
+  },
+  {
+    title: "Soft Skills",
+    skills: ["Teamwork", "Problem Solving", "Time Management", "Adaptability", "Communication"]
   }
 ];
 
@@ -68,7 +72,7 @@ export default function SkillsSection() {
 
       <div className="max-w-6xl mx-auto relative z-10">
         <div className="text-center mb-20">
-          <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-6">Technical <span className="text-primary">Mastery</span></h2>
+          <h2 className="text-4xl md:text-5xl font-cursive font-bold text-foreground mb-6">Technical <span className="text-primary">Mastery</span></h2>
           <p className="text-muted-foreground max-w-2xl mx-auto">
             A comprehensive toolset developed through academic rigor and hands-on project experience.
           </p>
@@ -84,7 +88,7 @@ export default function SkillsSection() {
               transition={{ delay: idx * 0.1 }}
               className="space-y-4"
             >
-              <h3 className="text-xl font-semibold text-foreground pl-1">{category.title}</h3>
+              <h3 className="text-2xl font-cursive font-semibold text-foreground pl-1">{category.title}</h3>
               <div className="grid gap-3">
                 {category.skills.map((skill, sIdx) => (
                   <SkillCard key={sIdx} skill={skill} />

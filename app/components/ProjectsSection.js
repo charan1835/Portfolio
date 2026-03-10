@@ -117,7 +117,7 @@ function ProjectCard({ project, idx }) {
 
       {/* Content Section */}
       <div className="flex flex-col flex-grow p-6 md:p-8 pt-2">
-        <h3 className="text-2xl font-bold text-foreground mb-3 group-hover:text-primary transition-colors flex items-center gap-2">
+        <h3 className="text-2xl font-cursive font-bold text-foreground mb-3 group-hover:text-primary transition-colors flex items-center gap-2">
           {project.name}
           <ArrowUpRight className="w-5 h-5 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300 text-primary" />
         </h3>
@@ -179,7 +179,7 @@ export default function ProjectsSection() {
         {/* Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-16">
           <div className="max-w-2xl">
-            <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-6 tracking-tight">
+            <h2 className="text-4xl md:text-5xl font-cursive font-bold text-foreground mb-6">
               My <span className="text-primary">projects</span>
             </h2>
             <p className="text-lg text-muted-foreground">

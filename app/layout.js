@@ -1,6 +1,11 @@
-import { Geist, Geist_Mono } from "next/font/google";
+import { Dancing_Script, Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "react-hot-toast";
+
+const cursiveFont = Dancing_Script({
+  variable: "--font-cursive",
+  subsets: ["latin"],
+});
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -28,7 +33,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" className="dark" suppressHydrationWarning>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${cursiveFont.variable} ${geistMono.variable} antialiased font-sans`}
       >
         <Toaster position="top-center" toastOptions={{
           style: {

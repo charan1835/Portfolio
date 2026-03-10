@@ -33,7 +33,7 @@ export default function ContactSection() {
 
           {/* Giant Call to Action */}
           <div>
-            <h2 className="text-7xl md:text-9xl font-bold tracking-tighter text-foreground mb-8 leading-[0.8]">
+            <h2 className="text-7xl md:text-9xl font-cursive font-bold text-foreground mb-8 leading-[0.8]">
               LET&rsquo;S <br />
               <span className="text-outline">TALK.</span>
             </h2>
@@ -96,15 +96,6 @@ export default function ContactSection() {
           </form>
         </div>
 
-        {/* Footer Bottom */}
-        <div className="mt-32 pt-8 border-t border-border flex flex-col md:flex-row justify-between items-center text-sm text-muted-foreground">
-          <p>&copy; {new Date().getFullYear()} Charan Sai.</p>
-          <div className="flex gap-6 mt-4 md:mt-0">
-            <a href="#" className="hover:text-foreground transition-colors">Twitter</a>
-            <a href="#" className="hover:text-foreground transition-colors">LinkedIn</a>
-            <a href="#" className="hover:text-foreground transition-colors">GitHub</a>
-          </div>
-        </div>
       </div>
     </section>
   );

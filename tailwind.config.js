@@ -8,6 +8,10 @@ module.exports = {
 	],
 	theme: {
 		extend: {
+			fontFamily: {
+				sans: ['var(--font-geist-sans)', 'sans-serif'],
+				cursive: ['var(--font-cursive)', 'cursive', 'sans-serif'],
+			},
 			colors: {
 				// Strict 3-Color Palette
 				background: 'var(--background)',

@@ -36,7 +36,7 @@ export default function AchievementsSection() {
 
             <div className="max-w-7xl mx-auto relative z-10">
                 <div className="mb-16">
-                    <h2 className="text-4xl md:text-6xl font-bold text-foreground mb-6 tracking-tighter">
+                    <h2 className="text-4xl md:text-6xl font-cursive font-bold text-foreground mb-6 tracking-tighter">
                         MY <span className="text-outline">ACHIEVEMENTS</span>
                     </h2>
                     <div className="h-1 w-20 bg-primary mb-6" />
@@ -56,7 +56,7 @@ export default function AchievementsSection() {
                                 <achievement.icon className="w-8 h-8 text-foreground group-hover:text-primary transition-colors" />
                             </div>
 
-                            <h3 className="text-2xl font-bold text-foreground mb-2 group-hover:text-primary transition-colors">
+                            <h3 className="text-2xl font-cursive font-bold text-foreground mb-2 group-hover:text-primary transition-colors">
                                 {achievement.title}
                             </h3>
 
