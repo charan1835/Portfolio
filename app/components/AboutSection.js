@@ -23,12 +23,16 @@ export default function AboutSection() {
 
             <div className="space-y-6 text-lg text-muted-foreground leading-relaxed">
               <p>
-                I&rsquo;m <strong className="text-foreground">Charan Sai</strong>, a computer science student and developer.
-                My passion lies in understanding how complex systems work and rebuilding them to be better, faster, and more intuitive.
+                Hi, I&rsquo;m <strong className="text-foreground">Charan</strong>, a Full-Stack Developer and Machine Learning enthusiast who enjoys building practical and user-focused applications. I like turning ideas into real products using modern web technologies and exploring how AI can enhance everyday tools.
               </p>
               <p>
-                While I&rsquo;m constantly learning new technologies, my core philosophy stays the same:
-                <span className="text-foreground"> simplicity is the ultimate sophistication</span>. I strive to write code that human beings can understand and computers can execute efficiently.
+                I mainly work with <strong className="text-foreground">Next.js, Tailwind CSS, MERN stack, and headless CMS platforms</strong>, focusing on creating clean interfaces and efficient backend functionality. Over time, I&rsquo;ve built multiple projects that combine good design with intelligent features.
+              </p>
+              <p>
+                Outside of development, I enjoy <strong className="text-foreground">listening to music and playing basketball</strong>, along with solving DSA problems and exploring new technologies. I enjoy learning by building projects, tackling challenges, and continuously improving my problem-solving skills.
+              </p>
+              <p>
+                I&rsquo;m always curious about new ideas, excited to collaborate with other developers, and motivated to create technology that solves real-world problems.
               </p>
             </div>
 
