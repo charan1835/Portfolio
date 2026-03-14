@@ -13,6 +13,19 @@ module.exports = {
 				cursive: ['var(--font-cursive)', 'cursive', 'sans-serif'],
 			},
 			colors: {
+				'big-stone': {
+					'50': '#f2f7fc',
+					'100': '#e1edf8',
+					'200': '#c9e0f4',
+					'300': '#a4cdec',
+					'400': '#79b3e1',
+					'500': '#5a96d7',
+					'600': '#457dcb',
+					'700': '#3c6ab9',
+					'800': '#365797',
+					'900': '#304a78',
+					'950': '#1d2941',
+				},
 				// Strict 3-Color Palette
 				background: 'var(--background)',
 				foreground: 'var(--foreground)',

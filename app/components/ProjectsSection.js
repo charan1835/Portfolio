@@ -73,8 +73,8 @@ function ProjectCard({ project, idx }) {
           </div>
         )}
 
-        {/* Overlay Gradient */}
-        <div className="absolute inset-0 bg-gradient-to-t from-card via-card/20 to-transparent opacity-80" />
+        {/* Overlay Gradient (Hidden in Light Mode to remove fog) */}
+        <div className="absolute inset-0 bg-gradient-to-t from-card via-card/20 to-transparent opacity-0 dark:opacity-80 transition-opacity" />
 
         {/* Links overlay - visible on hover/tap */}
         <div className={`absolute inset-0 flex items-center justify-center gap-4 transition-opacity duration-300 ${isHovered ? 'opacity-100' : 'opacity-0'}`}>

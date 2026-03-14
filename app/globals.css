@@ -19,23 +19,18 @@
   }
 
   .light {
-    /* Premium Slate Light Theme */
-    --background: #f8fafc;
-    /* Slate 50 */
-    --foreground: #0f172a;
-    /* Slate 900 */
+    /* Big Stone Light Theme */
+    --background: #f2f7fc; /* big-stone-50 */
+    --foreground: #1d2941; /* big-stone-950 */
     --card: #ffffff;
-    --card-foreground: #0f172a;
-    --border: #e2e8f0;
-    /* Slate 200 */
-    --input: #e2e8f0;
-    --muted: #f1f5f9;
-    /* Slate 100 */
-    --muted-foreground: #64748b;
-    /* Slate 500 */
-    --text-stroke: rgba(0, 0, 0, 0.2);
-    --scrollbar-bg: #f8fafc;
-    --scrollbar-thumb: #cbd5e1;
+    --card-foreground: #304a78; /* big-stone-900 */
+    --border: #c9e0f4; /* big-stone-200 */
+    --input: #c9e0f4; /* big-stone-200 */
+    --muted: #e1edf8; /* big-stone-100 */
+    --muted-foreground: #457dcb; /* big-stone-600 */
+    --text-stroke: rgba(29, 41, 65, 0.2); /* big-stone-950 with opacity */
+    --scrollbar-bg: #f2f7fc; /* big-stone-50 */
+    --scrollbar-thumb: #a4cdec; /* big-stone-300 */
   }
 
   html {

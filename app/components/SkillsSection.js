@@ -2,6 +2,7 @@
 
 import { motion, useMotionTemplate, useMotionValue } from 'framer-motion';
 import { useRef, useState } from 'react';
+import ScrollStack, { ScrollStackItem } from '@/components/ScrollStack';
 
 // Skill Data
 const skillCategories = [
@@ -39,7 +40,7 @@ function SkillCard({ skill }) {
 
   return (
     <div
-      className="group relative border border-border bg-card/50 px-4 py-3 rounded-xl overflow-hidden"
+      className="group relative border border-border bg-card/90 dark:bg-card/50 px-4 py-3 rounded-xl overflow-hidden"
       onMouseMove={handleMouseMove}
     >
       {/* Spotlight Gradient */}
@@ -67,8 +68,8 @@ function SkillCard({ skill }) {
 export default function SkillsSection() {
   return (
     <section id="skills" className="py-24 px-6 bg-background relative overflow-hidden">
-      {/* Background Decoration */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[300px] bg-primary/5 blur-[100px] rounded-full pointer-events-none" />
+      {/* Background Decoration only vivid in dark mode */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[300px] bg-transparent dark:bg-primary/5 blur-[100px] rounded-full pointer-events-none transition-colors duration-500" />
 
       <div className="max-w-6xl mx-auto relative z-10">
         <div className="text-center mb-20">
@@ -78,24 +79,22 @@ export default function SkillsSection() {
           </p>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-8">
-          {skillCategories.map((category, idx) => (
-            <motion.div
-              key={idx}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: idx * 0.1 }}
-              className="space-y-4"
-            >
-              <h3 className="text-2xl font-cursive font-semibold text-foreground pl-1">{category.title}</h3>
-              <div className="grid gap-3">
-                {category.skills.map((skill, sIdx) => (
-                  <SkillCard key={sIdx} skill={skill} />
-                ))}
-              </div>
-            </motion.div>
-          ))}
+        <div className="h-[75vh] w-full max-w-4xl mx-auto border border-border/50 rounded-3xl overflow-hidden bg-muted/30 dark:bg-muted/10 relative">
+          <div className="absolute top-4 right-4 z-10 animate-bounce text-muted-foreground flex items-center gap-2 text-sm font-sans bg-background/80 dark:bg-background/50 backdrop-blur-md px-3 py-1.5 rounded-full border border-border">
+            <span>Scroll inside</span> ↓
+          </div>
+          <ScrollStack>
+            {skillCategories.map((category, idx) => (
+              <ScrollStackItem key={idx} itemClassName="bg-card w-full rounded-3xl border border-border shadow-sm dark:shadow-2xl p-6 md:p-8 !h-auto min-h-[400px]">
+                <h3 className="text-3xl font-cursive font-semibold text-foreground mb-6 text-center border-b border-border/50 pb-4">{category.title}</h3>
+                <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                  {category.skills.map((skill, sIdx) => (
+                    <SkillCard key={sIdx} skill={skill} />
+                  ))}
+                </div>
+              </ScrollStackItem>
+            ))}
+          </ScrollStack>
         </div>
       </div>
     </section>
