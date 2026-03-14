@@ -1,6 +1,6 @@
 'use client';
 
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { useState, useEffect } from 'react';
 import SimpleThemeToggle from './SimpleThemeToggle';
 
@@ -10,12 +10,14 @@ const navItems = [
   { name: 'Skills', href: '#skills' },
   { name: 'Experience', href: '#experience' },
   { name: 'Projects', href: '#projects' },
+  { name: 'Achievements', href: '#achievements' },
   { name: 'Contact', href: '#contact' },
 ];
 
 export default function Navigation() {
   const [scrolled, setScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState('home');
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -40,6 +42,7 @@ export default function Navigation() {
 
   const scrollToSection = (e, href) => {
     e.preventDefault();
+    setIsMobileMenuOpen(false);
     const element = document.querySelector(href);
     if (element) {
       const offset = 80; // Header offset
@@ -62,13 +65,13 @@ export default function Navigation() {
       transition={{ duration: 0.4 }}
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled ? 'bg-background/95 dark:bg-background/80 backdrop-blur-md border-b border-border shadow-sm' : 'bg-transparent border-transparent'}`}
     >
-      <div className={`max-w-7xl mx-auto px-6 transition-all duration-300 ${scrolled ? 'py-4' : 'py-6'}`}>
+      <div className={`max-w-7xl mx-auto px-4 md:px-6 transition-all duration-300 ${scrolled ? 'py-4' : 'py-6'}`}>
         <div className="flex items-center justify-between">
           {/* Logo */}
           <motion.a
             href="#home"
             onClick={(e) => scrollToSection(e, '#home')}
-            className="text-4xl font-cursive font-semibold text-foreground z-50 pl-2"
+            className="text-2xl md:text-4xl font-cursive font-semibold text-foreground z-50 pl-2"
             whileHover={{ scale: 1.05 }}
           >
             Charan <span className="text-primary">Sai</span>
@@ -102,39 +105,68 @@ export default function Navigation() {
             </div>
           </div>
 
-          {/* Mobile Theme Toggle and Resume */}
-          <div className="md:hidden flex items-center gap-3">
-            <SimpleThemeToggle />
-            <a
-              href="/charansaichimbili.pdf"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="px-4 py-1.5 text-lg font-cursive font-medium bg-primary text-white rounded-md hover:bg-primary/90 transition-colors shadow-lg shadow-primary/20"
+          {/* Mobile Menu Toggle */}
+          <div className="md:hidden flex items-center">
+            <button
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              className="p-1 -mr-2 text-foreground focus:outline-none"
+              aria-label="Toggle mobile menu"
             >
-              Resume
-            </a>
+              {isMobileMenuOpen ? (
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              ) : (
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+              )}
+            </button>
           </div>
         </div>
       </div>
 
-      {/* Mobile Horizontal Scroll "Tabs" - The "Section Scroll Thing" */}
-      <div className="md:hidden border-t border-border bg-background/95 dark:bg-background/95 backdrop-blur-xl">
-        <div className="overflow-x-auto no-scrollbar py-3 px-4 flex gap-4 snap-x">
-          {navItems.map((item) => (
-            <a
-              key={item.name}
-              href={item.href}
-              onClick={(e) => scrollToSection(e, item.href)}
-              className={`whitespace-nowrap text-xl font-cursive font-medium px-4 py-2 rounded-full transition-all snap-center ${activeSection === item.href.substring(1)
-                ? 'bg-primary text-white shadow-lg shadow-primary/20'
-                : 'text-muted-foreground hover:text-foreground bg-muted/50 border border-border'
-                }`}
-            >
-              {item.name}
-            </a>
-          ))}
-        </div>
-      </div>
+      {/* Mobile Menu Dropdown */}
+      <AnimatePresence>
+        {isMobileMenuOpen && (
+          <motion.div
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.3 }}
+            className="md:hidden overflow-hidden bg-background/95 dark:bg-background/95 backdrop-blur-xl border-t border-border shadow-md"
+          >
+            <div className="flex flex-col py-6 px-6 space-y-5">
+              {navItems.map((item) => (
+                <a
+                  key={item.name}
+                  href={item.href}
+                  onClick={(e) => scrollToSection(e, item.href)}
+                  className={`text-2xl font-cursive font-medium transition-colors ${activeSection === item.href.substring(1)
+                    ? 'text-primary'
+                    : 'text-muted-foreground hover:text-foreground'
+                    }`}
+                >
+                  {item.name}
+                </a>
+              ))}
+              <div className="pt-6 border-t border-border mt-4 flex items-center justify-between gap-4">
+                <div className="p-2 bg-muted rounded-xl">
+                  <SimpleThemeToggle fontClassName="!text-3xl" />
+                </div>
+                <a
+                  href="/charansaichimbili.pdf"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex-1 px-6 py-3 text-2xl font-cursive font-medium bg-primary text-white rounded-xl hover:bg-primary/90 transition-all shadow-lg shadow-primary/20 text-center active:scale-95"
+                >
+                  Resume
+                </a>
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </motion.nav>
   );
 }

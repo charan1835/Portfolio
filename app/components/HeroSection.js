@@ -19,7 +19,7 @@ export default function HeroSection() {
   return (
     <section id="home" className="min-h-screen flex items-center justify-center relative overflow-hidden bg-background">
       <ProfileCard
-        avatarUrl="/pic.png"
+        avatarUrl="/PR.jpg"
         name="Charan Sai"
         title="Full Stack Developer | ML Enthusiast"
         handle="charan1835"
