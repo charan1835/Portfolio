@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { Award, ExternalLink, ShieldCheck, BadgeCheck } from 'lucide-react';
+import { Award, ExternalLink, ShieldCheck, BadgeCheck, ArrowRight } from 'lucide-react';
 
 const certifications = [
     {
@@ -60,22 +60,22 @@ export default function CertificationsSection() {
                     <div className="h-1 w-20 bg-primary mb-6" />
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div className="flex gap-6 overflow-x-auto pb-12 scrollbar-none snap-x snap-mandatory scroll-smooth p-2 -m-2">
                     {certifications.map((cert, idx) => (
                         <motion.div
                             key={idx}
-                            initial={{ opacity: 0, y: 20 }}
-                            whileInView={{ opacity: 1, y: 0 }}
+                            initial={{ opacity: 0, scale: 0.95 }}
+                            whileInView={{ opacity: 1, scale: 1 }}
                             viewport={{ once: true }}
                             transition={{ delay: idx * 0.1 }}
-                            className="bg-card border border-border rounded-2xl p-8 hover:border-primary/50 transition-colors group relative"
+                            className="flex-shrink-0 w-[85vw] md:w-[calc(33.333%-1rem)] snap-center bg-card/60 backdrop-blur-xl border border-border rounded-[2.5rem] p-8 hover:border-primary/50 transition-all group relative hover:-translate-y-2 duration-300 shadow-xl"
                         >
-                            <div className="mb-6 inline-block p-4 bg-primary/10 rounded-full group-hover:bg-primary/20 group-hover:text-primary transition-colors text-primary">
+                            <div className="mb-6 inline-block p-4 bg-primary/10 rounded-2xl group-hover:bg-primary group-hover:text-white transition-all duration-300 text-primary">
                                 <cert.icon className="w-8 h-8 group-hover:scale-110 transition-transform" />
                             </div>
 
                             {cert.image && (
-                                <div className="mb-6 relative h-40 w-full overflow-hidden rounded-xl border border-border group-hover:border-primary/50 transition-colors bg-muted/10">
+                                <div className="mb-6 relative h-48 w-full overflow-hidden rounded-[2rem] border border-border group-hover:border-primary/50 transition-colors bg-muted/10">
                                     <img 
                                         src={cert.image} 
                                         alt={cert.title} 
@@ -97,12 +97,12 @@ export default function CertificationsSection() {
                                         className="text-muted-foreground hover:text-primary transition-colors mt-1 flex-shrink-0"
                                         title="View Certificate"
                                     >
-                                        <ExternalLink className="w-5 h-5" />
+                                        <ExternalLink className="w-6 h-6" />
                                     </a>
                                 )}
                             </div>
 
-                            <div className="text-sm text-primary mb-4 font-mono">
+                            <div className="text-sm text-primary mb-4 font-mono font-bold tracking-tight">
                                 {cert.organization} • {cert.date}
                             </div>
                             
@@ -112,6 +112,14 @@ export default function CertificationsSection() {
 
                         </motion.div>
                     ))}
+                </div>
+
+                {/* Scroll Hint */}
+                <div className="flex justify-center mt-4 md:hidden">
+                    <div className="animate-pulse flex items-center gap-2 text-muted-foreground text-sm font-medium bg-muted/30 px-4 py-2 rounded-full border border-border">
+                        <span>Scroll to explore</span>
+                        <ArrowRight className="w-4 h-4" />
+                    </div>
                 </div>
             </div>
         </section>

@@ -1,6 +1,7 @@
 import { Dancing_Script, Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "react-hot-toast";
+import FixedSignature from "./components/FixedSignature";
 
 const cursiveFont = Dancing_Script({
   variable: "--font-cursive",
@@ -43,6 +44,7 @@ export default function RootLayout({ children }) {
           },
         }} />
         {children}
+        <FixedSignature />
       </body>
     </html>
   );
