@@ -28,6 +28,52 @@ const skillCategories = [
   }
 ];
 
+import { BookOpen, Code, Coffee, Users, Lightbulb, Clock, Zap, MessageSquare, Terminal } from 'lucide-react';
+
+// Skill Icon Mapping
+const skillIconMap = {
+  // Web (Images)
+  "Next.js": { type: "image", icon: "nextjs" },
+  "React": { type: "image", icon: "react" },
+  "Node.js": { type: "image", icon: "nodejs" },
+  "Tailwind CSS": { type: "image", icon: "tailwind" },
+  "MongoDB": { type: "image", icon: "mongodb" },
+  "GraphQL": { type: "image", icon: "graphql" },
+  "Clerk": { type: "image", icon: "clerk" },
+
+  // AI/ML (Images)
+  "Python": { type: "image", icon: "py" },
+  "PyTorch": { type: "image", icon: "pytorch" },
+  "TensorFlow": { type: "image", icon: "tensorflow" },
+  "Pandas": { type: "image", icon: "pandas" },
+  "NumPy": { type: "image", icon: "numpy" },
+  "Scikit-learn": { type: "image", icon: "sklearn" },
+  "Streamlit": { type: "image", icon: "streamlit" },
+
+  // Core (Images)
+  "C++": { type: "image", icon: "cpp" },
+  "Java": { type: "image", icon: "java" },
+  "c": { type: "image", icon: "c" },
+  "python": { type: "image", icon: "py" },
+  "javascript": { type: "image", icon: "js" },
+
+  // Tools (Images)
+  "Git": { type: "image", icon: "git" },
+  "VS Code": { type: "image", icon: "vscode" },
+  "Vercel": { type: "image", icon: "vercel" },
+  "Figma": { type: "image", icon: "figma" },
+  "Postman": { type: "image", icon: "postman" },
+  "Github": { type: "image", icon: "github" },
+
+  // Soft Skills & Others (Lucide Icons)
+  "Teamwork": { type: "lucide", icon: Users },
+  "Problem Solving": { type: "lucide", icon: Lightbulb },
+  "Time Management": { type: "lucide", icon: Clock },
+  "Adaptability": { type: "lucide", icon: Zap },
+  "Communication": { type: "lucide", icon: MessageSquare },
+  "Boltic": { type: "lucide", icon: Terminal },
+};
+
 function SkillCard({ skill }) {
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
@@ -37,6 +83,8 @@ function SkillCard({ skill }) {
     mouseX.set(clientX - left);
     mouseY.set(clientY - top);
   }
+
+  const iconData = skillIconMap[skill];
 
   return (
     <div
@@ -57,9 +105,23 @@ function SkillCard({ skill }) {
         }}
       />
       <div className="relative flex items-center gap-3">
-        {/* Simple dot for now, or icon if we mapped them */}
-        <div className="w-2 h-2 rounded-full bg-primary/50 group-hover:bg-primary transition-colors" />
-        <span className="text-sm md:text-base text-muted-foreground font-medium group-hover:text-foreground transition-colors">{skill}</span>
+        {iconData?.type === "image" ? (
+          <img 
+            src={`https://skillicons.dev/icons?i=${iconData.icon}`} 
+            alt={skill} 
+            className="w-8 h-8 object-contain transition-transform duration-300 group-hover:scale-110 group-hover:rotate-3 shadow-lg rounded-md"
+            loading="lazy"
+          />
+        ) : iconData?.type === "lucide" ? (
+          <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-all duration-300 group-hover:scale-110">
+            <iconData.icon className="w-5 h-5 text-primary" />
+          </div>
+        ) : (
+          <div className="w-8 h-8 rounded-lg bg-primary/10 dark:bg-primary/20 flex items-center justify-center group-hover:bg-primary/30 transition-colors">
+            <span className="text-xs font-bold text-primary">{skill.charAt(0)}</span>
+          </div>
+        )}
+        <span className="text-sm md:text-base text-muted-foreground font-medium group-hover:text-foreground transition-colors truncate">{skill}</span>
       </div>
     </div>
   );

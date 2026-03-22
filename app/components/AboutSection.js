@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { BookOpen, Code, Coffee } from 'lucide-react';
+import { BookOpen, Code, Coffee, Gamepad2, Code2, Camera, MapPin, Music, Trophy, Cpu, Lightbulb } from 'lucide-react';
 
 export default function AboutSection() {
   return (
@@ -49,7 +49,7 @@ export default function AboutSection() {
             </div>
           </motion.div>
 
-          {/* Right: Glass Visual Card */}
+          {/* Right: Hobbies Visual Card */}
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             whileInView={{ opacity: 1, scale: 1 }}
@@ -59,20 +59,38 @@ export default function AboutSection() {
             {/* Background Blob */}
             <div className="absolute inset-0 bg-primary/20 blur-3xl rounded-full transform rotate-12" />
 
-            <div className="relative bg-card/50 backdrop-blur-xl border border-border rounded-3xl p-8 shadow-2xl">
-              <div className="grid grid-cols-2 gap-6">
-                <div className="text-center p-6 bg-muted/50 rounded-2xl border border-border">
-                  <div className="text-5xl font-bold text-foreground mb-2">2+</div>
-                  <div className="text-lg text-gray-400 capitalize">Years Coding</div>
-                </div>
-                <div className="text-center p-6 bg-muted/50 rounded-2xl border border-border">
-                  <div className="text-5xl font-bold text-foreground mb-2">10+</div>
-                  <div className="text-lg text-gray-400 capitalize">Projects</div>
-                </div>
-                <div className="col-span-2 text-center p-6 bg-primary/10 rounded-2xl border border-primary/20">
-                  <div className="text-2xl font-bold text-foreground mb-1">Open To Work</div>
-                  <div className="text-lg text-primary/80 capitalize">Available for hire</div>
-                </div>
+            <div className="relative bg-card/60 backdrop-blur-2xl border border-border rounded-[2.5rem] p-8 md:p-12 shadow-2xl overflow-hidden group">
+               {/* Hobbies Badge */}
+               <div className="absolute top-0 left-0 bg-primary text-white px-8 py-3 rounded-br-3xl font-cursive font-bold text-xl shadow-lg z-20">
+                Hobbies
+              </div>
+
+              {/* Left Accent Border */}
+              <div className="absolute left-0 top-16 bottom-0 w-1.5 bg-primary/30 rounded-full group-hover:bg-primary transition-colors" />
+
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-6 pt-12">
+                {[
+                  { icon: Gamepad2, label: "Gaming" },
+                  { icon: Code2, label: "Coding" },
+                  { icon: Camera, label: "Photography" },
+                  { icon: MapPin, label: "Travel" },
+                  { icon: Music, label: "Music" },
+                  { icon: Trophy, label: "Basketball" },
+                  { icon: Cpu, label: "Hardware" },
+                  { icon: Lightbulb, label: "Creating" },
+                ].map((hobby, idx) => (
+                  <motion.div
+                    key={idx}
+                    whileHover={{ scale: 1.05, translateY: -5 }}
+                    className="flex flex-col items-center justify-center p-6 bg-muted/20 rounded-3xl border border-border/50 hover:border-primary/50 hover:bg-primary/5 transition-all cursor-default group/item relative overflow-hidden"
+                  >
+                    <div className="absolute inset-0 bg-primary/5 opacity-0 group-hover/item:opacity-100 transition-opacity" />
+                    <hobby.icon className="w-10 h-10 text-muted-foreground group-hover/item:text-primary transition-all duration-300 transform group-hover/item:scale-110" />
+                    <span className="text-sm font-cursive font-semibold mt-3 text-muted-foreground group-hover/item:text-foreground transition-colors">
+                      {hobby.label}
+                    </span>
+                  </motion.div>
+                ))}
               </div>
             </div>
           </motion.div>

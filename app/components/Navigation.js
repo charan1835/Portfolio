@@ -11,6 +11,7 @@ const navItems = [
   { name: 'Experience', href: '#experience' },
   { name: 'Projects', href: '#projects' },
   { name: 'Achievements', href: '#achievements' },
+  { name: 'Certifications', href: '#certifications' },
   { name: 'Contact', href: '#contact' },
 ];
 
@@ -71,20 +72,20 @@ export default function Navigation() {
           <motion.a
             href="#home"
             onClick={(e) => scrollToSection(e, '#home')}
-            className="text-2xl md:text-4xl font-cursive font-semibold text-foreground z-50 pl-2"
+            className="text-xl md:text-2xl lg:text-3xl font-cursive font-semibold text-foreground z-50 pl-2"
             whileHover={{ scale: 1.05 }}
           >
             Charan <span className="text-primary">Sai</span>
           </motion.a>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-4">
+          <div className="hidden md:flex items-center space-x-1 lg:space-x-2">
             {navItems.map((item) => (
               <a
                 key={item.name}
                 href={item.href}
                 onClick={(e) => scrollToSection(e, item.href)}
-                className={`relative px-4 py-2 text-2xl font-cursive font-medium transition-colors group ${activeSection === item.href.substring(1) ? 'text-primary' : 'text-muted-foreground hover:text-foreground'
+                className={`relative px-2 lg:px-3 py-1.5 text-base lg:text-xl font-cursive font-medium transition-colors group ${activeSection === item.href.substring(1) ? 'text-primary' : 'text-muted-foreground hover:text-foreground'
                   }`}
               >
                 {item.name}
@@ -92,16 +93,8 @@ export default function Navigation() {
                   }`} />
               </a>
             ))}
-            <div className="pl-4 border-l border-border flex items-center space-x-4">
+            <div className="pl-2 lg:pl-4 border-l border-border flex items-center space-x-2 lg:space-x-4">
               <SimpleThemeToggle />
-              <a
-                href="/charansaichimbili.pdf"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="px-5 py-2 text-xl font-cursive font-medium bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors shadow-lg shadow-primary/20"
-              >
-                Resume
-              </a>
             </div>
           </div>
 
@@ -142,7 +135,7 @@ export default function Navigation() {
                   key={item.name}
                   href={item.href}
                   onClick={(e) => scrollToSection(e, item.href)}
-                  className={`text-2xl font-cursive font-medium transition-colors ${activeSection === item.href.substring(1)
+                  className={`text-xl font-cursive font-medium transition-colors ${activeSection === item.href.substring(1)
                     ? 'text-primary'
                     : 'text-muted-foreground hover:text-foreground'
                     }`}
@@ -154,14 +147,6 @@ export default function Navigation() {
                 <div className="p-2 bg-muted rounded-xl">
                   <SimpleThemeToggle fontClassName="!text-3xl" />
                 </div>
-                <a
-                  href="/charansaichimbili.pdf"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex-1 px-6 py-3 text-2xl font-cursive font-medium bg-primary text-white rounded-xl hover:bg-primary/90 transition-all shadow-lg shadow-primary/20 text-center active:scale-95"
-                >
-                  Resume
-                </a>
               </div>
             </div>
           </motion.div>
@@ -170,3 +155,5 @@ export default function Navigation() {
     </motion.nav>
   );
 }
+
+

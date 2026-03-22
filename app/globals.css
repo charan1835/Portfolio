@@ -91,6 +91,19 @@
   animation: gradient 3s ease infinite;
 }
 
+@keyframes bounce-slow {
+  0%, 100% {
+    transform: translateY(-5%) rotate(0deg);
+  }
+  50% {
+    transform: translateY(0) rotate(10deg);
+  }
+}
+
+.animate-bounce-slow {
+  animation: bounce-slow 2s infinite ease-in-out;
+}
+
 .no-scrollbar::-webkit-scrollbar {
   display: none;
 }
