@@ -4,12 +4,12 @@ import { useState, useEffect } from 'react';
 import { Moon, Sun } from 'lucide-react';
 
 export default function SimpleThemeToggle() {
-  const [theme, setTheme] = useState('dark');
+  const [theme, setTheme] = useState('light');
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
     setMounted(true);
-    const savedTheme = localStorage.getItem('theme') || 'dark';
+    const savedTheme = localStorage.getItem('theme') || 'light';
     setTheme(savedTheme);
   }, []);
 
@@ -27,8 +27,8 @@ export default function SimpleThemeToggle() {
 
   if (!mounted) {
     return (
-      <div className="p-3 rounded-2xl bg-slate-800/50 border border-slate-700/50">
-        <Sun className="w-5 h-5 text-yellow-400" />
+      <div className="p-3 rounded-2xl bg-card border border-border">
+        <Moon className="w-5 h-5 text-slate-400" />
       </div>
     );
   }
