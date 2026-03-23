@@ -30,16 +30,16 @@ const achievements = [
 
 export default function AchievementsSection() {
     return (
-        <section id="achievements" className="py-24 px-6 bg-background relative overflow-hidden">
+        <section id="achievements" className="py-24 md:py-32 px-6 bg-background relative overflow-hidden">
             {/* Background Decoration */}
             <div className="absolute top-1/2 right-0 -translate-y-1/2 w-[500px] h-[500px] bg-primary/5 rounded-full blur-[100px] pointer-events-none" />
 
             <div className="max-w-7xl mx-auto relative z-10">
-                <div className="mb-16">
-                    <h2 className="text-4xl md:text-6xl font-cursive font-bold text-foreground mb-6 tracking-tighter">
+                <div className="mb-16 md:mb-24">
+                    <h2 className="text-4xl md:text-7xl font-cursive font-bold text-foreground mb-6 tracking-tighter">
                         MY <span className="text-outline">ACHIEVEMENTS</span>
                     </h2>
-                    <div className="h-1 w-20 bg-primary mb-6" />
+                    <div className="h-1.5 w-24 bg-primary mb-6 rounded-full" />
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">

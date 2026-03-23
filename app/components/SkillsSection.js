@@ -2,7 +2,6 @@
 
 import { motion, useMotionTemplate, useMotionValue } from 'framer-motion';
 import { useRef, useState } from 'react';
-import ScrollStack, { ScrollStackItem } from '@/components/ScrollStack';
 
 // Skill Data
 const skillCategories = [
@@ -141,24 +140,30 @@ export default function SkillsSection() {
           </p>
         </div>
 
-        <div className="h-[80vh] md:h-[75vh] w-full max-w-4xl mx-auto border border-border/50 rounded-2xl md:rounded-3xl overflow-hidden bg-muted/30 dark:bg-muted/10 relative">
-          <div className="absolute top-4 right-4 z-10 animate-bounce text-muted-foreground flex items-center gap-2 text-xs md:text-sm font-sans bg-background/80 dark:bg-background/50 backdrop-blur-md px-3 py-1.5 rounded-full border border-border">
-            <span>Scroll inside</span> ↓
-          </div>
-          <ScrollStack>
-            {skillCategories.map((category, idx) => (
-              <ScrollStackItem key={idx} itemClassName="bg-card w-full rounded-2xl md:rounded-3xl border border-border shadow-sm dark:shadow-2xl p-4 md:p-8 !h-auto min-h-[300px] md:min-h-[400px]">
-                <h3 className="text-2xl md:text-3xl font-cursive font-semibold text-foreground mb-4 md:mb-6 text-center border-b border-border/50 pb-3 md:pb-4">{category.title}</h3>
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 md:gap-4">
-                  {category.skills.map((skill, sIdx) => (
-                    <SkillCard key={sIdx} skill={skill} />
-                  ))}
-                </div>
-              </ScrollStackItem>
-            ))}
-          </ScrollStack>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {skillCategories.map((category, idx) => (
+            <motion.div
+              key={idx}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: idx * 0.1 }}
+              className={`bg-card rounded-2xl border border-border shadow-sm hover:border-primary/50 transition-all duration-300 p-6 flex flex-col ${
+                idx === 0 ? "md:col-span-2 lg:col-span-2" : ""
+              }`}
+            >
+              <h3 className="text-xl md:text-2xl font-cursive font-semibold text-foreground mb-4 border-b border-border/50 pb-2">
+                {category.title}
+              </h3>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-auto">
+                {category.skills.map((skill, sIdx) => (
+                  <SkillCard key={sIdx} skill={skill} />
+                ))}
+              </div>
+            </motion.div>
+          ))}
         </div>
       </div>
     </section>
-  );
+);
 }
