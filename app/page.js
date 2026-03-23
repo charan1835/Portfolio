@@ -8,7 +8,6 @@ import AchievementsSection from './components/AchievementsSection';
 import CertificationsSection from './components/CertificationsSection';
 import ContactSection from './components/ContactSection';
 import Footer from './Footer';
-//import SplashCursor from './components/SplashCursor';
 
 export default function Home() {
   return (

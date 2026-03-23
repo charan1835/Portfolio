@@ -1,9 +1,12 @@
 'use client';
-
-import { motion } from 'framer-motion';
+import { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { BookOpen, Code, Coffee, Gamepad2, Code2, Camera, MapPin, Music, Trophy, Cpu, Lightbulb } from 'lucide-react';
+import MoreAboutMe from './MoreAboutMe';
 
 export default function AboutSection() {
+  const [isOpen, setIsOpen] = useState(false);
+
   return (
     <section id="about" className="py-24 px-6 bg-background relative overflow-hidden">
       <div className="max-w-6xl mx-auto">
@@ -47,6 +50,18 @@ export default function AboutSection() {
                 <Coffee className="w-5 h-5 text-primary" /> Problem Solving
               </div>
             </div>
+
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={() => setIsOpen(true)}
+              className="mt-8 px-8 py-3 bg-primary text-white rounded-full font-cursive font-bold shadow-lg hover:shadow-primary/30 transition-shadow flex items-center gap-2"
+            >
+              Know More About Me
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+              </svg>
+            </motion.button>
           </motion.div>
 
           {/* Right: Hobbies Visual Card */}
@@ -97,6 +112,9 @@ export default function AboutSection() {
 
         </div>
       </div>
+      <AnimatePresence>
+        {isOpen && <MoreAboutMe onClose={() => setIsOpen(false)} />}
+      </AnimatePresence>
     </section>
   );
 }

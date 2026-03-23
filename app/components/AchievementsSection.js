@@ -15,7 +15,7 @@ const achievements = [
     {
         title: "Active Contributor",
         organization: "GitHub",
-        description: "Maintained an active contribution streak with over 250 commits in the last 6 months, working on various freelance and personal projects.",
+        description: "Maintained an active contribution streak with over 350 commits in the last 6 months, working on various freelance and personal projects.",
         icon: Github,
         date: "2025"
     },
