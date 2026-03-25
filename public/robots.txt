@@ -1,0 +1,9 @@
+# *
+User-agent: *
+Allow: /
+
+# Host
+Host: https://www.charansai.app
+
+# Sitemaps
+Sitemap: https://www.charansai.app/sitemap.xml
