@@ -134,7 +134,7 @@ export default function SkillsSection() {
 
       <div className="max-w-6xl mx-auto relative z-10">
         <div className="text-center mb-12 md:mb-20">
-          <h2 className="text-4xl md:text-5xl font-cursive font-bold text-foreground mb-6">Technical <span className="text-primary">Mastery</span></h2>
+          <h2 className="text-4xl md:text-5xl font-cursive font-bold text-foreground mb-6">Skills of <span className="text-primary">Charan Sai</span></h2>
           <p className="text-muted-foreground max-w-2xl mx-auto">
             A comprehensive toolset developed through academic rigor and hands-on project experience.
           </p>

@@ -33,11 +33,11 @@ export default function LightHeroCard({ avatarUrl, name, title, handle, onContac
             </motion.div>
 
             <h1 className="text-5xl md:text-7xl font-bold text-slate-900 leading-[1.1] tracking-tight">
-              Crafting <span className="text-primary italic font-cursive h-16 inline-block align-middle mt-2">seamless</span> digital experiences.
+              Hi, I&apos;m <span className="text-primary italic font-cursive h-16 inline-block align-middle mt-2">Charan Sai</span>
             </h1>
 
             <p className="text-xl text-slate-600 max-w-xl leading-relaxed">
-              Transforming innovative ideas into high-performance digital solutions.
+              Charan Sai is a full-stack developer building AI-powered apps and machine learning solutions.
               Let&apos;s build something extraordinary together.
             </p>
           </div>

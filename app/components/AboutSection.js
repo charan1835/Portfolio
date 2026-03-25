@@ -19,14 +19,17 @@ export default function AboutSection() {
             viewport={{ once: true }}
             className="space-y-8"
           >
-            <h2 className="text-4xl md:text-5xl font-cursive font-bold text-foreground leading-tight">
-              Driven by curiosity,<br />
-              <span className="text-primary">Powered by code.</span>
-            </h2>
+            <div className="space-y-4">
+              <span className="text-primary font-bold tracking-widest uppercase text-sm">About Charan Sai</span>
+              <h2 className="text-4xl md:text-5xl font-cursive font-bold text-foreground leading-tight">
+                Driven by curiosity,<br />
+                <span className="text-primary">Powered by code.</span>
+              </h2>
+            </div>
 
             <div className="space-y-6 text-lg text-muted-foreground leading-relaxed">
               <p>
-                Hi, I&rsquo;m <strong className="text-foreground">Charan</strong>, a Full-Stack Developer and Machine Learning enthusiast who enjoys building practical and user-focused applications. I like turning ideas into real products using modern web technologies and exploring how AI can enhance everyday tools.
+                Hi, I&rsquo;m <strong className="text-foreground">Charan Sai</strong>, a Full-Stack Developer and Machine Learning enthusiast who enjoys building practical and user-focused applications. I like turning ideas into real products using modern web technologies and exploring how AI can enhance everyday tools.
               </p>
               <p>
                 I mainly work with <strong className="text-foreground">Next.js, Tailwind CSS, MERN stack, and headless CMS platforms</strong>, focusing on creating clean interfaces and efficient backend functionality. Over time, I&rsquo;ve built multiple projects that combine good design with intelligent features.

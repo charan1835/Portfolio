@@ -2,60 +2,77 @@
 
 import { motion, AnimatePresence } from 'framer-motion';
 import { useState, useEffect } from 'react';
+import { usePathname, useRouter } from 'next/navigation';
 import SimpleThemeToggle from './SimpleThemeToggle';
 
 const navItems = [
-  { name: 'Home', href: '#home' },
-  { name: 'About', href: '#about' },
-  { name: 'Skills', href: '#skills' },
-  { name: 'Projects', href: '#projects' },
-  { name: 'Achievements', href: '#achievements' },
-  { name: 'Certifications', href: '#certifications' },
-  { name: 'Career', href: '#experience' },
-  { name: 'Contact', href: '#contact' },
+  { name: 'Home', href: '/' },
+  { name: 'About', href: '/about' },
+  { name: 'Projects', href: '/projects' },
+  { name: 'Contact', href: '/contact' },
+  { name: 'Skills', href: '/#skills' },
+  { name: 'Achievements', href: '/#achievements' },
+  { name: 'Certifications', href: '/#certifications' },
+  { name: 'Career', href: '/#experience' },
 ];
 
 export default function Navigation() {
   const [scrolled, setScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState('home');
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const pathname = usePathname();
+  const router = useRouter();
 
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 20);
 
-      // Determine active section
-      const sections = navItems.map(item => item.href.substring(1));
-      const scrollPosition = window.scrollY + 150; // Offset for header height
+      if (pathname === '/') {
+        const sections = ['home', 'about', 'skills', 'projects', 'achievements', 'certifications', 'experience', 'contact'];
+        const scrollPosition = window.scrollY + 150;
 
-      for (const section of sections) {
-        const element = document.getElementById(section);
-        if (element && element.offsetTop <= scrollPosition && (element.offsetTop + element.offsetHeight) > scrollPosition) {
-          setActiveSection(section);
+        for (const section of sections) {
+          const element = document.getElementById(section);
+          if (element && element.offsetTop <= scrollPosition && (element.offsetTop + element.offsetHeight) > scrollPosition) {
+            setActiveSection(section);
+          }
         }
       }
     };
 
     window.addEventListener('scroll', handleScroll);
-    handleScroll(); // Check initial state
+    handleScroll();
     return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  }, [pathname]);
 
-  const scrollToSection = (e, href) => {
-    e.preventDefault();
-    setIsMobileMenuOpen(false);
-    const element = document.querySelector(href);
-    if (element) {
-      const offset = 80; // Header offset
-      const bodyRect = document.body.getBoundingClientRect().top;
-      const elementRect = element.getBoundingClientRect().top;
-      const elementPosition = elementRect - bodyRect;
-      const offsetPosition = elementPosition - offset;
+  const handleNavClick = (e, item) => {
+    const isAnchor = item.href.includes('#');
 
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: 'smooth'
-      });
+    if (isAnchor && pathname === '/') {
+      e.preventDefault();
+      setIsMobileMenuOpen(false);
+      const sectionId = item.href.split('#')[1];
+      const element = document.getElementById(sectionId);
+      if (element) {
+        const offset = 80;
+        const elementRect = element.getBoundingClientRect().top;
+        const elementPosition = elementRect + window.pageYOffset;
+        const offsetPosition = elementPosition - offset;
+
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: 'smooth'
+        });
+        setActiveSection(sectionId);
+      }
+    } else if (isAnchor && pathname !== '/') {
+      setIsMobileMenuOpen(false);
+    } else if (pathname === item.href) {
+      e.preventDefault();
+      setIsMobileMenuOpen(false);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } else {
+      setIsMobileMenuOpen(false);
     }
   };
 
@@ -70,8 +87,8 @@ export default function Navigation() {
         <div className="flex items-center justify-between">
           {/* Logo */}
           <motion.a
-            href="#home"
-            onClick={(e) => scrollToSection(e, '#home')}
+            href="/"
+            onClick={(e) => handleNavClick(e, { name: 'Home', href: '/' })}
             className="text-xl md:text-2xl lg:text-3xl font-cursive font-semibold text-foreground z-50 pl-2"
             whileHover={{ scale: 1.05 }}
           >
@@ -84,13 +101,19 @@ export default function Navigation() {
               <a
                 key={item.name}
                 href={item.href}
-                onClick={(e) => scrollToSection(e, item.href)}
-                className={`relative px-2 lg:px-3 py-1.5 text-base lg:text-xl font-cursive font-medium transition-colors group ${activeSection === item.href.substring(1) ? 'text-primary' : 'text-muted-foreground hover:text-foreground'
-                  }`}
+                onClick={(e) => handleNavClick(e, item)}
+                className={`relative px-2 lg:px-3 py-1.5 text-base lg:text-xl font-cursive font-medium transition-colors group ${
+                  (pathname === item.href || (item.href.includes('#') && activeSection === item.href.split('#')[1])) 
+                    ? 'text-primary' 
+                    : 'text-muted-foreground hover:text-foreground'
+                }`}
               >
                 {item.name}
-                <span className={`absolute inset-x-0 bottom-0 h-0.5 bg-primary transform transition-transform origin-left ${activeSection === item.href.substring(1) ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'
-                  }`} />
+                <span className={`absolute inset-x-0 bottom-0 h-0.5 bg-primary transform transition-transform origin-left ${
+                  (pathname === item.href || (item.href.includes('#') && activeSection === item.href.split('#')[1])) 
+                    ? 'scale-x-100' 
+                    : 'scale-x-0 group-hover:scale-x-100'
+                }`} />
               </a>
             ))}
             <div className="pl-2 lg:pl-4 border-l border-border flex items-center space-x-2 lg:space-x-4">
@@ -134,11 +157,12 @@ export default function Navigation() {
                 <a
                   key={item.name}
                   href={item.href}
-                  onClick={(e) => scrollToSection(e, item.href)}
-                  className={`text-xl font-cursive font-medium transition-colors ${activeSection === item.href.substring(1)
-                    ? 'text-primary'
-                    : 'text-muted-foreground hover:text-foreground'
-                    }`}
+                  onClick={(e) => handleNavClick(e, item)}
+                  className={`text-xl font-cursive font-medium transition-colors ${
+                    (pathname === item.href || (item.href.includes('#') && activeSection === item.href.split('#')[1])) 
+                      ? 'text-primary' 
+                      : 'text-muted-foreground hover:text-foreground'
+                  }`}
                 >
                   {item.name}
                 </a>
@@ -155,5 +179,3 @@ export default function Navigation() {
     </motion.nav>
   );
 }
-
-

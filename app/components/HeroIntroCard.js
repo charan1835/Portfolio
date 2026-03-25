@@ -43,13 +43,13 @@ export default function HeroIntroCard() {
 
         <div>
           <h1 className="text-4xl md:text-5xl font-bold text-white leading-tight tracking-tight">
-            Crafting <span className="font-cursive italic text-primary drop-shadow-[0_0_20px_rgba(37,99,235,0.6)]">seamless</span> digital experiences.
+            Hi, I&apos;m <span className="font-cursive italic text-primary drop-shadow-[0_0_20px_rgba(37,99,235,0.6)]">Charan Sai</span>
           </h1>
           <div className="h-1 w-16 bg-primary mt-4 rounded-full" />
         </div>
 
         <p className="text-lg text-slate-300 leading-relaxed max-w-lg">
-          Transforming innovative ideas into high-performance digital solutions. Let&apos;s build something extraordinary together.
+          Charan Sai is a full-stack developer specializing in AI-powered web applications and machine learning solutions.
         </p>
 
         <div className="flex flex-wrap gap-4 items-center">
